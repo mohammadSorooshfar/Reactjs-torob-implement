@@ -29,11 +29,18 @@ router.post("/", function(req, res) {
     var sql_signin="SELECT * FROM user WHERE email='"+email+"' AND password='"+password+"'";
     con.query(sql_signin,function(err,result){
         if(err) throw err;
-        const token = generateAccessToken({ userid: req.body.email });
-        res.status(200).send({
-            token: token,
-            message: "successful",
-          });
+        if(result.length==0){
+            res.status(400).send({
+                message: "email or password is incorrect"
+              }); 
+        }else{
+            const token = generateAccessToken({ userid: req.body.email });
+            res.status(200).send({
+                token: token,
+                message: "successful",
+              });
+        }
+     
     })
 });
 
