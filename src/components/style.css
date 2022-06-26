@@ -43,5 +43,14 @@ main {
   padding: 1%;
   background-color: rgba(128, 128, 128, 0.169);
 }
-.accordion {
+.signup-bg {
+  height: 100vh;
+}
+.signup {
+  background-color: white;
+  width: 400px;
+  box-shadow: 1px 1px 10px rgb(108, 108, 108);
+}
+.link-login {
+  text-decoration: none;
 }
