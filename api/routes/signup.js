@@ -46,6 +46,7 @@ router.post("/", function(req, res) {
            }else{
                 var sql_insert_user="INSERT INTO user (email,username,password) VALUES ('"+email+"','"+username+"','"+password+"')";
                 //console.log(sql_insert_user)
+                
                 con.query(sql_insert_user,function(err,result){
                     if(err) throw err;
                     res.send({
