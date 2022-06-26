@@ -3,3 +3,45 @@
   text-align: right;
   font-family: iranyekan;
 }
+.btn-search {
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+.input-search {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+.dropdown-toggle::after {
+  margin-right: 10px;
+}
+aside {
+  width: 30%;
+  position: fixed;
+  overflow: auto;
+}
+.accordion-button:not(.collapsed) {
+  color: black !important;
+  background-color: white !important;
+}
+.brand-div {
+  padding: 2%;
+  border-radius: 3px;
+}
+.brand-div:hover {
+  background-color: #d8d8d853;
+  cursor: pointer;
+}
+.brand-div p {
+  margin: 0;
+}
+.w-40 {
+  width: 40% !important;
+}
+main {
+  margin-right: 30%;
+  width: 70%;
+  padding: 1%;
+  background-color: rgba(128, 128, 128, 0.169);
+}
+.accordion {
+}
