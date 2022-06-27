@@ -14,6 +14,7 @@ router.post("/", function(req, res) {
     var email=req.body.email;
     var password=req.body.password;
     var username=req.body.username;
+    var role=req.body.role;
     var sql_check_exist_username="SELECT * FROM user WHERE username='"+username+"'"
     con.query(sql_check_exist_username,function(err,result){
         if(err) throw err;
@@ -44,7 +45,7 @@ router.post("/", function(req, res) {
                 code:400
             })
            }else{
-                var sql_insert_user="INSERT INTO user (email,username,password) VALUES ('"+email+"','"+username+"','"+password+"')";
+                var sql_insert_user="INSERT INTO user (email,username,password,type) VALUES ('"+email+"','"+username+"','"+password+"','"+role+"')";
                 //console.log(sql_insert_user)
                 
                 con.query(sql_insert_user,function(err,result){
