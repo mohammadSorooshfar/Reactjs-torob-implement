@@ -10,7 +10,10 @@ export default function Signup(props) {
     <>
       <div className="signup-bg d-flex justify-content-center align-items-center">
         <div className="signup rounded py-5 d-flex flex-column justify-content-center align-items-center ">
-          <div className="d-flex align-items-center">
+          <div
+            className="torob-logo d-flex align-items-center"
+            onClick={() => navigate("/")}
+          >
             <img
               src="https://torob.com/static/images/torob_logo.svg"
               alt="torob-logo"
@@ -34,7 +37,16 @@ export default function Signup(props) {
               <Form.Control
                 type="password"
                 placeholder="کلمه عبور را وارد کنید"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                required
+              />{" "}
+              <input
+                className="ms-2 mt-2"
+                type="checkbox"
+                onclick="myFunction()"
+                name="showPass"
               />
+              <label htmlFor="showPass">نمایش رمز عبور</label>
             </Form.Group>
             <Button variant="danger" type="submit">
               ثبت نام

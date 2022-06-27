@@ -20,7 +20,9 @@ export default function Products(props) {
                 style={{ width: "35px", height: "35px" }}
                 className="ms-2"
               />
-              <h2 className="text-danger ms-3">ترب</h2>
+              <h2 className="text-danger ms-3" onClick={() => navigate("/")}>
+                ترب
+              </h2>
               <button className="btn btn-danger btn-search" type="button">
                 <i className="fa fa-search"></i>
               </button>
@@ -180,14 +182,33 @@ export default function Products(props) {
         </div>
 
         <div className="row mb-3">
-          <div className="col-md-3 col-2">
+          <div className="col-lg-3 col-6">
             <div class="card p-1">
               <span class="wish-icon me-2">
                 <i class="fa fa-heart-o"></i>
               </span>
               <img
                 class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
+                alt="Card cap"
+              />
+              <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <h5 class="card-title text-secondary">گوشی موبایل آیفون 13</h5>
+                <p class="card-text">۴۵,۰۰۰,۰۰۰ تومان</p>
+                <Link to="/shop/iphone" class="btn btn-outline-success">
+                  مشاهده فروشندگان
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 col-6">
+            <div class="card p-1">
+              <span class="wish-icon me-2">
+                <i class="fa fa-heart-o"></i>
+              </span>
+              <img
+                class="card-img-top"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -199,14 +220,14 @@ export default function Products(props) {
               </div>
             </div>
           </div>
-          <div className="col-md-3 col-2">
+          <div className="col-lg-3 col-6">
             <div class="card p-1">
               <span class="wish-icon me-2">
                 <i class="fa fa-heart-o"></i>
               </span>
               <img
                 class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -218,33 +239,14 @@ export default function Products(props) {
               </div>
             </div>
           </div>
-          <div className="col-md-3 col-2">
+          <div className="col-lg-3 col-6">
             <div class="card p-1">
               <span class="wish-icon me-2">
                 <i class="fa fa-heart-o"></i>
               </span>
               <img
                 class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
-                alt="Card cap"
-              />
-              <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                <h5 class="card-title text-secondary">گوشی موبایل آیفون 13</h5>
-                <p class="card-text">۴۵,۰۰۰,۰۰۰ تومان</p>
-                <a href="#" class="btn btn-outline-success">
-                  مشاهده فروشندگان
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-3 col-2">
-            <div class="card p-1">
-              <span class="wish-icon me-2">
-                <i class="fa fa-heart-o"></i>
-              </span>
-              <img
-                class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -258,14 +260,14 @@ export default function Products(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-3 col-2">
+          <div className="col-lg-3 col-6">
             <div class="card p-1">
               <span class="wish-icon me-2">
                 <i class="fa fa-heart-o"></i>
               </span>
               <img
                 class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -277,14 +279,14 @@ export default function Products(props) {
               </div>
             </div>
           </div>
-          <div className="col-md-3 col-2">
+          <div className="col-lg-3 col-6">
             <div class="card p-1">
               <span class="wish-icon me-2">
                 <i class="fa fa-heart-o"></i>
               </span>
               <img
                 class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -296,14 +298,14 @@ export default function Products(props) {
               </div>
             </div>
           </div>
-          <div className="col-md-3 col-2">
+          <div className="col-lg-3 col-6">
             <div class="card p-1">
               <span class="wish-icon me-2">
                 <i class="fa fa-heart-o"></i>
               </span>
               <img
                 class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -315,14 +317,14 @@ export default function Products(props) {
               </div>
             </div>
           </div>
-          <div className="col-md-3 col-2">
+          <div className="col-lg-3 col-6">
             <div class="card p-1">
               <span class="wish-icon me-2">
                 <i class="fa fa-heart-o"></i>
               </span>
               <img
                 class="card-img-top"
-                src="https://storage.torob.com/backend-api/base/images/oy/jj/oyjjdjEguJdNpuw2.jpg_/0x145.jpg"
+                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
               <div class="card-body d-flex flex-column justify-content-center align-items-center">

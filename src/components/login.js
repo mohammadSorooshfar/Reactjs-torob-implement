@@ -10,7 +10,10 @@ export default function Login(props) {
     <>
       <div className="signup-bg d-flex justify-content-center align-items-center">
         <div className="signup rounded py-5 d-flex flex-column justify-content-center align-items-center ">
-          <div className="d-flex align-items-center">
+          <div
+            className="torob-logo d-flex align-items-center"
+            onClick={() => navigate("/")}
+          >
             <img
               src="https://torob.com/static/images/torob_logo.svg"
               alt="torob-logo"
@@ -19,7 +22,10 @@ export default function Login(props) {
             />
             <h2 className="text-danger ms-3 fs-1">ترب</h2>
           </div>
-          <Form className=" py-5 d-flex flex-column justify-content-center align-items-center">
+          <Form
+            className=" py-5 d-flex flex-column justify-content-center align-items-center"
+            onSubmit={() => navigate("/profile")}
+          >
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>ایمیل</Form.Label>
               <Form.Control type="email" placeholder="ایمیل را وارد کنید" />
@@ -31,9 +37,16 @@ export default function Login(props) {
                 type="password"
                 placeholder="کلمه عبور را وارد کنید"
               />
+              <input
+                className="ms-2 mt-2"
+                type="checkbox"
+                onclick="myFunction()"
+                name="showPass"
+              />
+              <label htmlFor="showPass">نمایش رمز عبور</label>
             </Form.Group>
             <Button variant="danger" type="submit">
-              ثبت نام
+              ورود
             </Button>
             <div className="d-flex mt-4">
               <p> ثبت نام نکرده اید؟</p>

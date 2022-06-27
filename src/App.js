@@ -5,6 +5,8 @@ import Home from "./components/homePage";
 import Products from "./components/products";
 import Signup from "./components/signup";
 import Login from "./components/login";
+import ProductDetail from "./components/productDetail";
+import Profile from "./components/profile";
 function App() {
   return (
     <>
@@ -25,6 +27,8 @@ function App() {
           <Route path="/mobiles/apple" element={<Products />} exact />
           <Route path="/tablets/apple" element={<Products />} exact />
           <Route path="/laptops/apple" element={<Products />} exact />
+          <Route path="/shop/iphone" element={<ProductDetail />} exact />
+          <Route path="/profile" element={<Profile />} exact />
         </Routes>
       </div>
     </>
