@@ -15,12 +15,13 @@ router.post("/", function(req, res) {
     var password=req.body.password;
     var username=req.body.username;
     var role=req.body.role;
-    var sql_check_exist_username="SELECT * FROM user WHERE username='"+username+"'"
+    var number=req.body.phone_number;
+    var sql_check_exist_username="SELECT * FROM user WHERE username='"+username+"' OR email='"+email+"'"
     con.query(sql_check_exist_username,function(err,result){
         if(err) throw err;
         if(result.length!=0){
             res.status(400).send({
-                message:"this username alredy exist",
+                message:"this username or email alredy exist",
                 code:400
             })
         }else{
@@ -45,7 +46,7 @@ router.post("/", function(req, res) {
                 code:400
             })
            }else{
-                var sql_insert_user="INSERT INTO user (email,username,password,type) VALUES ('"+email+"','"+username+"','"+password+"','"+role+"')";
+                var sql_insert_user="INSERT INTO user (email,username,password,type,phone_number) VALUES ('"+email+"','"+username+"','"+password+"','"+role+"','"+number+"')";
                 //console.log(sql_insert_user)
                 
                 con.query(sql_insert_user,function(err,result){

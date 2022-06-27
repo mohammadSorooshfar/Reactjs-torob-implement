@@ -6,9 +6,11 @@ var signin=require("./routes/signin")
 var mobile_list=require("./routes/mobile_get_list");
 var tablet_list=require("./routes/tablet_get_list");
 var laptop_list=require("./routes/laptop_get_list");
+var profile=require("./routes/profile")
 var app = express();
 app.use(express.json());
 app.use(cors());
+app.use("/profile",profile);
 app.use("/signup",signup);
 app.use("/signin",signin);
 app.use("/laptop",laptop_list)
