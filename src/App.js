@@ -7,6 +7,7 @@ import Signup from "./components/signup";
 import Login from "./components/login";
 import ProductDetail from "./components/productDetail";
 import Profile from "./components/profile";
+import axios from "axios";
 function App() {
   return (
     <>

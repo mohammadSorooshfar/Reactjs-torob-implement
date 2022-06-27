@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
 export default function Login(props) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -11,7 +12,15 @@ export default function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log(email);
+
+    axios
+      .post(`http://localhost:9000/signin/`, { email, password })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     navigate("/profile");
   };
   return (

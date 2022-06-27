@@ -4,15 +4,32 @@ import { useNavigate, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
+
 export default function Signup(props) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("normal");
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log(username);
+    let user = {
+      email,
+      password,
+      username,
+      role,
+    };
+    console.log(user);
+    axios
+      .post(`http://localhost:9000/signup/`, { ...user })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     navigate("/login");
   };
   return (
@@ -52,7 +69,7 @@ export default function Signup(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-5" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>رمز عبور</Form.Label>
               <Form.Control
                 type={showPassword ? "text" : "password"}
@@ -73,6 +90,15 @@ export default function Signup(props) {
               />
               <label htmlFor="showPass">نمایش رمز عبور</label>
             </Form.Group>
+            <select
+              class="form-select mb-3"
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="normal" selected>
+                خریدار
+              </option>
+              <option value="store">فروشنده</option>
+            </select>
             <Button variant="danger" type="submit">
               ثبت نام
             </Button>
