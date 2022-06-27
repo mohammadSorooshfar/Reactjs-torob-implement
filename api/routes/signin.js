@@ -34,8 +34,12 @@ router.post("/", function(req, res) {
                 message: "email or password is incorrect"
               }); 
         }else{
+            
             const token = generateAccessToken({ userid: req.body.email });
             res.status(200).send({
+                email:result[0].email,
+                role:result[0].type,
+                username:result[0].username,
                 token: token,
                 message: "successful",
               });
