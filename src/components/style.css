@@ -3,3 +3,79 @@
   text-align: right;
   font-family: iranyekan;
 }
+.btn-search {
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+.input-search {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+.dropdown-toggle::after {
+  margin-right: 10px;
+}
+aside {
+  width: 30%;
+  position: fixed;
+  overflow: auto;
+}
+.accordion-button:not(.collapsed) {
+  color: black !important;
+  background-color: white !important;
+}
+.brand-div {
+  padding: 2%;
+  border-radius: 3px;
+}
+.brand-div:hover {
+  background-color: #d8d8d853;
+  cursor: pointer;
+}
+.brand-div p {
+  margin: 0;
+}
+.w-40 {
+  width: 40% !important;
+}
+main {
+  margin-right: 30%;
+  width: 70%;
+  padding: 1%;
+  background-color: rgba(128, 128, 128, 0.169);
+}
+.signup-bg {
+  height: 100vh;
+}
+.signup {
+  background-color: white;
+  width: 400px;
+  box-shadow: 1px 1px 10px rgb(108, 108, 108);
+}
+.link-login {
+  text-decoration: none;
+}
+.torob-logo:hover {
+  cursor: pointer;
+}
+.product-detail-main {
+  width: 100%;
+  background-color: #f2f3f5;
+  padding: 3% 8%;
+}
+.bg-gray {
+  background-color: #f2f3f5;
+}
+.product-name-row {
+  background-color: white;
+}
+.product-detail-image {
+  width: 200px;
+  height: 200px;
+}
+.w-20 {
+  width: 20%;
+}
+.wish-icon {
+  cursor: pointer;
+  width: fit-content;
+}

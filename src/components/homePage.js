@@ -105,7 +105,12 @@ export default function Home(props) {
               style={{ width: "200px", height: "200px" }}
             />
             <div className="me-5">
-              <h1 className="text-danger display-1">ترب</h1>
+              <h1
+                className="text-danger display-1"
+                onClick={() => navigate("/")}
+              >
+                ترب
+              </h1>
               <h3>موتور جستجوی هوشمند خرید</h3>
             </div>
           </div>
