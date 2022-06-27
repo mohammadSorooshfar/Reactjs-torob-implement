@@ -75,3 +75,7 @@ main {
 .w-20 {
   width: 20%;
 }
+.wish-icon {
+  cursor: pointer;
+  width: fit-content;
+}

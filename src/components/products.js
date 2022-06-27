@@ -8,6 +8,8 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Accordion from "react-bootstrap/Accordion";
 export default function Products(props) {
   const navigate = useNavigate();
+  const [liked, setLiked] = useState(false);
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -202,19 +204,24 @@ export default function Products(props) {
             </div>
           </div>
           <div className="col-lg-3 col-6">
-            <div class="card p-1">
-              <span class="wish-icon me-2">
-                <i class="fa fa-heart-o"></i>
+            <div className="card p-1">
+              <span className="wish-icon me-2">
+                <i
+                  className={liked ? "fa fa-heart" : "fa fa-heart-o"}
+                  onClick={() => setLiked(!liked)}
+                ></i>
               </span>
               <img
-                class="card-img-top"
+                className="card-img-top"
                 src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
                 alt="Card cap"
               />
-              <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                <h5 class="card-title text-secondary">گوشی موبایل آیفون 13</h5>
-                <p class="card-text">۴۵,۰۰۰,۰۰۰ تومان</p>
-                <a href="#" class="btn btn-outline-success">
+              <div className="card-body d-flex flex-column justify-content-center align-items-center">
+                <h5 className="card-title text-secondary">
+                  گوشی موبایل آیفون 13
+                </h5>
+                <p className="card-text">۴۵,۰۰۰,۰۰۰ تومان</p>
+                <a href="#" className="btn btn-outline-success">
                   مشاهده فروشندگان
                 </a>
               </div>
