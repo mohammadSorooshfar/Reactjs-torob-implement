@@ -58,7 +58,7 @@ router.get("/:type", authenticateToken,function(req, res) {
         }
     })
 });
-router.get("/",(req,res)=>{
+router.get("/", authenticateToken,(req,res)=>{
     var sql="SELECT commodity.id,name,low_price,high_price,time,COUNT(shop_commodity.commodityid) as count_shop,time,img_link FROM commodity join shop_commodity ON shop_commodity.commodityid=commodity.id WHERE type='tablet' GROUP BY commodity.id,name,low_price,high_price,time,img_link";
     con.query(sql,function(err,result){
         if(err) throw err;
