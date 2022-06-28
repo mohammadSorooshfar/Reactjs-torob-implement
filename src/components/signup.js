@@ -26,11 +26,11 @@ export default function Signup(props) {
       .post(`http://localhost:9000/signup/`, { ...user })
       .then((res) => {
         console.log(res.data);
+        navigate("/login");
       })
       .catch((e) => {
         console.log(e);
       });
-    navigate("/login");
   };
   return (
     <>

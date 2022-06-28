@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import { useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -10,12 +11,14 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 export default function Profile(props) {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.cart.user);
+  console.log(user);
   const [category, setCategory] = useState("mobile");
-  const [username, setUsername] = useState("mohammad sorooshfar");
-  const [email, setEmail] = useState("mohammad.sorooshfar@gmail.com");
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
   const [usernameInput, setUsernameInput] = useState(username);
   const [emailInput, setEmailInput] = useState(email);
-  const [phoneInput, setPhoneInput] = useState("09371933465");
+  const [phoneInput, setPhoneInput] = useState("");
   const [productDetails, setProductDetails] = useState({
     name: "",
     price: "",
@@ -25,7 +28,7 @@ export default function Profile(props) {
     weight: "",
     ram: "",
   });
-  const role = "client";
+  const role = user.role;
   const changeProductDetail = (e, property) => {
     const details = productDetails;
     details[property] = `${e.target.value}`;
@@ -152,7 +155,7 @@ export default function Profile(props) {
             <p className="mb-0 me-5">{email}</p>
           </div>
         </div>
-        {role === "client" ? (
+        {role === "normal" ? (
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
             <Accordion.Item eventKey="0">
               <Accordion.Header>کالا های محبوب</Accordion.Header>
@@ -336,7 +339,9 @@ export default function Profile(props) {
                   <div className="row mt-5">
                     <div className="col">
                       <Form.Group controlId="formBasicPassword">
-                        <Form.Label>گارانتی</Form.Label>
+                        <Form.Label>
+                          {category === "laptop" ? "اندازه صفحه" : "گارانتی"}
+                        </Form.Label>
                         <Form.Control
                           type="text"
                           onChange={(e) => changeProductDetail(e, "garanty")}
@@ -356,7 +361,9 @@ export default function Profile(props) {
                     </div>
                     <div className="col">
                       <Form.Group controlId="formBasicPassword">
-                        <Form.Label>وزن</Form.Label>
+                        <Form.Label>
+                          {category === "laptop" ? "کارت گرافیک" : "وزن"}
+                        </Form.Label>
                         <Form.Control
                           type="text"
                           onChange={(e) => changeProductDetail(e, "weight")}

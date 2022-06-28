@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./style.css";
 import { useNavigate, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import { saveUser } from "./redux/cart";
+
 export default function Login(props) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,12 +20,12 @@ export default function Login(props) {
     axios
       .post(`http://localhost:9000/signin/`, { email, password })
       .then((res) => {
-        console.log(res.data);
+        dispatch(saveUser(res.data));
+        navigate("/profile");
       })
       .catch((e) => {
         console.log(e);
       });
-    navigate("/profile");
   };
   return (
     <>
