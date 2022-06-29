@@ -44,7 +44,7 @@ router.post("/add",authenticateToken,(req,res)=>{
         })
     })
 })
-router.delete("delete",authenticateToken,(req,res)=>{
+router.delete("/delete",authenticateToken,(req,res)=>{
     let commodityid=req.body.commodityid;
     let userid=req.body.userid;
     var sql="DELETE FROM fav_commodity_list WHERE userid='"+userid+"' AND commodityid='"+commodityid+"'"
