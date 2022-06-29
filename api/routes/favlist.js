@@ -44,4 +44,16 @@ router.post("/add",authenticateToken,(req,res)=>{
         })
     })
 })
+router.delete("delete",authenticateToken,(req,res)=>{
+    let commodityid=req.body.commodityid;
+    let userid=req.body.userid;
+    var sql="DELETE FROM fav_commodity_list WHERE userid='"+userid+"' AND commodityid='"+commodityid+"'"
+    con.query(sql,function(err,result){
+        if(err) throw err;
+        res.status(200).send({
+            message:"کالا با وفقیت از لیست محبوب ها حذف شد",
+            code:200
+        })
+    })
+})
 module.exports = router;
