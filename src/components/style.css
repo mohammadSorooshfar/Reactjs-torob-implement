@@ -43,6 +43,10 @@ main {
   padding: 1%;
   background-color: rgba(128, 128, 128, 0.169);
 }
+.nav-button {
+  border: none;
+  background-color: transparent;
+}
 .signup-bg {
   height: 100vh;
 }

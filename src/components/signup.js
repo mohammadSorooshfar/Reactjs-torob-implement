@@ -35,7 +35,7 @@ export default function Signup(props) {
   return (
     <>
       <div className="signup-bg d-flex justify-content-center align-items-center">
-        <div className="signup rounded py-5 d-flex flex-column justify-content-center align-items-center ">
+        <div className="signup rounded py-3 d-flex flex-column justify-content-center align-items-center ">
           <div
             className="torob-logo d-flex align-items-center"
             onClick={() => navigate("/")}
@@ -52,7 +52,7 @@ export default function Signup(props) {
             className=" py-5 d-flex flex-column justify-content-center align-items-center"
             onSubmit={onSubmitForm}
           >
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-2" controlId="formBasicPassword">
               <Form.Label>نام کاربری</Form.Label>
               <Form.Control
                 type="text"
@@ -60,7 +60,7 @@ export default function Signup(props) {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-2" controlId="formBasicEmail">
               <Form.Label>ایمیل</Form.Label>
               <Form.Control
                 type="email"
@@ -69,7 +69,28 @@ export default function Signup(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            {role === "normal" ? (
+              <Form.Group className="mb-2" controlId="formBasicEmail">
+                <Form.Label>شماره</Form.Label>
+                <Form.Control
+                  type="phone"
+                  placeholder="شماره را وارد کنید"
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled
+                />
+              </Form.Group>
+            ) : (
+              <Form.Group className="mb-2" controlId="formBasicEmail">
+                <Form.Label>شماره</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="شماره را وارد کنید"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
+            )}
+
+            <Form.Group className="mb-2" controlId="formBasicPassword">
               <Form.Label>رمز عبور</Form.Label>
               <Form.Control
                 type={showPassword ? "text" : "password"}
@@ -91,7 +112,7 @@ export default function Signup(props) {
               <label htmlFor="showPass">نمایش رمز عبور</label>
             </Form.Group>
             <select
-              class="form-select mb-3"
+              class="form-select mb-2"
               onChange={(e) => setRole(e.target.value)}
             >
               <option value="normal" selected>
