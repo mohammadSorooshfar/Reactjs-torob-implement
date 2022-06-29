@@ -30,7 +30,7 @@ con.connect(function (err) {
       next();
     });
   }
-router.put("/change_profile", authenticateToken,function(req, res) {
+router.put("/shop_owner/change_profile", authenticateToken,function(req, res) {
     var email=req.body.email;
     var Oldusername=req.body.oldusername;
     var Newusername=req.body.newusername;
@@ -59,7 +59,7 @@ router.put("/change_profile", authenticateToken,function(req, res) {
 
   
 });
-router.post("/add_product",authenticateToken,function(req, res){
+router.post("/shop_owner/add_product",authenticateToken,function(req, res){
       var pname=req.body.pname;
       var pprice=req.body.pprice;
       var plink=req.body.plink;
@@ -80,8 +80,9 @@ router.post("/add_product",authenticateToken,function(req, res){
         con.query(sql,function(err,result){
           if(err) throw err;
           if(result.length!=0){
-            var commodityid=result[0].commodityid;
-            var sql2="SELECT * FROM commodity JOIN shop_commodity ON commodity.id=shop_commodity.commodityid  WHERE name='"+pname+"' shopid='"+shop+"'";
+            let commodityid=result[0].id;
+            // console.log(commodityid)
+            var sql2="SELECT * FROM commodity JOIN shop_commodity ON commodity.id=shop_commodity.commodityid  WHERE name='"+pname+"' AND shopid='"+shop+"'";
             con.query(sql2,function(err,result){
               if(err) throw err;
               if(result.length!=0){
@@ -90,17 +91,18 @@ router.post("/add_product",authenticateToken,function(req, res){
                   code:400
                 })
               }else{
+                    
                     var sql3="INSERT INTO shop_commodity (commodityid,shopid,price,link) VALUES ('"+commodityid+"','"+shop+"','"+pprice+"','"+plink+"')";
-                    console.log(sql3);
+                    // console.log(sql3);
                     con.query(sql3,function(err,result){
                       if(err) throw err;
-                      var sql4="SELECT MAX(price),MIN(price) FROM shop_commodity WHERE commodityid='"+commodityid+"'";
+                      var sql4="SELECT MAX(price) as max ,MIN(price) as min FROM shop_commodity WHERE commodityid='"+commodityid+"'";
                       con.query(sql4,function(err,result){
                         if(err) throw err;
                         console.log(result);
-                        var max=result.max;
-                        var min=result.min;
-                        var sql5="UPDATE commodity SET low_price='"+min+"' high_price='"+max+"' WHERE commodityid='"+commodityid+"'";
+                        var max=result[0].max;
+                        var min=result[0].min;
+                        var sql5="UPDATE commodity SET low_price='"+min+"', high_price='"+max+"' WHERE id='"+commodityid+"'";
                         con.query(sql5,function(err,result){
                           if(err) throw err;
                           res.status(200).send({
@@ -113,13 +115,13 @@ router.post("/add_product",authenticateToken,function(req, res){
               }
             })
           }else{
-                var sql2="INSERT INTO commodity (name,low_price,high_price,model,type,img_link,time) VALUES ('"+pname+"','"+pprice+"','"+pprice+"','"+model+",'laptop','"+pimglink+"','"+time+"')";
+                var sql2="INSERT INTO commodity (name,low_price,high_price,model,type,img_link,time) VALUES ('"+pname+"','"+pprice+"','"+pprice+"','"+model+"','laptop','"+pimglink+"','"+time+"')";
                 con.query(sql2,function(err,result){
                     if(err) throw err;
                     var sql3="SELECT * FROM commodity WHERE name='"+pname+"'";
                     con.query(sql3,function(err,result){
                       if(err) throw err;
-                      let commodityid=result.id;
+                      let commodityid=result[0].id;
                       var sql4="INSERT INTO shop_commodity (commodityid,shopid,price,link) VALUES ('"+commodityid+"','"+shop+"','"+pprice+"','"+plink+"')";
                       con.query(sql4,function(err,result){
                         if(err) throw err;
@@ -146,8 +148,8 @@ router.post("/add_product",authenticateToken,function(req, res){
         con.query(sql,function(err,result){
           if(err) throw err;
           if(result.length!=0){
-            var commodityid=result[0].commodityid;
-            var sql2="SELECT * FROM commodity JOIN shop_commodity ON commodity.id=shop_commodity.commodityid  WHERE name='"+pname+"' shopid='"+shop+"'";
+            var commodityid=result[0].id;
+            var sql2="SELECT * FROM commodity JOIN shop_commodity ON commodity.id=shop_commodity.commodityid  WHERE name='"+pname+"' AND shopid='"+shop+"'";
             con.query(sql2,function(err,result){
               if(err) throw err;
               if(result.length!=0){
@@ -166,7 +168,7 @@ router.post("/add_product",authenticateToken,function(req, res){
                         console.log(result);
                         var max=result.max;
                         var min=result.min;
-                        var sql5="UPDATE commodity SET low_price='"+min+"' high_price='"+max+"' WHERE commodityid='"+commodityid+"'";
+                        var sql5="UPDATE commodity SET low_price='"+min+"', high_price='"+max+"' WHERE id='"+commodityid+"'";
                         con.query(sql5,function(err,result){
                           if(err) throw err;
                           res.status(200).send({
@@ -179,13 +181,13 @@ router.post("/add_product",authenticateToken,function(req, res){
               }
             })
           }else{
-                var sql2="INSERT INTO commodity (name,low_price,high_price,model,type,img_link,time) VALUES ('"+pname+"','"+pprice+"','"+pprice+"','"+model+",'mobile','"+pimglink+"','"+time+"')";
+                var sql2="INSERT INTO commodity (name,low_price,high_price,model,type,img_link,time) VALUES ('"+pname+"','"+pprice+"','"+pprice+"','"+model+"','mobile','"+pimglink+"','"+time+"')";
                 con.query(sql2,function(err,result){
                     if(err) throw err;
                     var sql3="SELECT * FROM commodity WHERE name='"+pname+"'";
                     con.query(sql3,function(err,result){
                       if(err) throw err;
-                      let commodityid=result.id;
+                      let commodityid=result[0].id;
                       var sql4="INSERT INTO shop_commodity (commodityid,shopid,price,link) VALUES ('"+commodityid+"','"+shop+"','"+pprice+"','"+plink+"')";
                       con.query(sql4,function(err,result){
                         if(err) throw err;
@@ -213,8 +215,8 @@ router.post("/add_product",authenticateToken,function(req, res){
         con.query(sql,function(err,result){
           if(err) throw err;
           if(result.length!=0){
-            var commodityid=result[0].commodityid;
-            var sql2="SELECT * FROM commodity JOIN shop_commodity ON commodity.id=shop_commodity.commodityid  WHERE name='"+pname+"' shopid='"+shop+"'";
+            var commodityid=result[0].id;
+            var sql2="SELECT * FROM commodity JOIN shop_commodity ON commodity.id=shop_commodity.commodityid  WHERE name='"+pname+"' AND shopid='"+shop+"'";
             con.query(sql2,function(err,result){
               if(err) throw err;
               if(result.length!=0){
@@ -224,16 +226,16 @@ router.post("/add_product",authenticateToken,function(req, res){
                 })
               }else{
                     var sql3="INSERT INTO shop_commodity (commodityid,shopid,price,link) VALUES ('"+commodityid+"','"+shop+"','"+pprice+"','"+plink+"')";
-                    console.log(sql3);
+                   
                     con.query(sql3,function(err,result){
                       if(err) throw err;
                       var sql4="SELECT MAX(price),MIN(price) FROM shop_commodity WHERE commodityid='"+commodityid+"'";
                       con.query(sql4,function(err,result){
                         if(err) throw err;
-                        console.log(result);
+                        
                         var max=result.max;
                         var min=result.min;
-                        var sql5="UPDATE commodity SET low_price='"+min+"' high_price='"+max+"' WHERE commodityid='"+commodityid+"'";
+                        var sql5="UPDATE commodity SET low_price='"+min+"', high_price='"+max+"' WHERE id='"+commodityid+"'";
                         con.query(sql5,function(err,result){
                           if(err) throw err;
                           res.status(200).send({
@@ -246,13 +248,16 @@ router.post("/add_product",authenticateToken,function(req, res){
               }
             })
           }else{
-                var sql2="INSERT INTO commodity (name,low_price,high_price,model,type,img_link,time) VALUES ('"+pname+"','"+pprice+"','"+pprice+"','"+model+",'tablet','"+pimglink+"','"+time+"')";
+                var sql2="INSERT INTO commodity (name,low_price,high_price,model,type,img_link,time) VALUES ('"+pname+"','"+pprice+"','"+pprice+"','"+model+"','tablet','"+pimglink+"','"+time+"')";
                 con.query(sql2,function(err,result){
                     if(err) throw err;
                     var sql3="SELECT * FROM commodity WHERE name='"+pname+"'";
                     con.query(sql3,function(err,result){
                       if(err) throw err;
-                      let commodityid=result.id;
+
+                      let commodityid=result[0].id;
+                      console.log(result)
+                      console.log(commodityid)
                       var sql4="INSERT INTO shop_commodity (commodityid,shopid,price,link) VALUES ('"+commodityid+"','"+shop+"','"+pprice+"','"+plink+"')";
                       con.query(sql4,function(err,result){
                         if(err) throw err;
