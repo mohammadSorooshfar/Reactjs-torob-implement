@@ -30,7 +30,7 @@ con.connect(function (err) {
       next();
     });
   }
-router.get("/:type", authenticateToken,function(req, res) {
+router.get("/:type",function(req, res) {
     var type_phone=req.params.type;
     var sql="SELECT commodity.id,name,low_price,high_price,time,COUNT(shop_commodity.commodityid) as count_shop,time,img_link FROM commodity join shop_commodity ON shop_commodity.commodityid=commodity.id WHERE commodity.type='mobile' AND model='"+type_phone+"' GROUP BY commodity.id,name,low_price,high_price,time,img_link";
     //console.log(sql)
@@ -52,14 +52,16 @@ router.get("/:type", authenticateToken,function(req, res) {
                         high_price:index.price,
                         time:index.time,
                         count_shop:index.count_shop,
-                        img:index.img_link
+                        img:index.img_link,
+                        low_price:index.low_price,
+                        high_price:index.high_price
                     }
                 })
             })
         }
     })
 });
-router.get("/", authenticateToken,(req,res)=>{
+router.get("/",(req,res)=>{
     var sql="SELECT commodity.id,name,low_price,high_price,time,COUNT(shop_commodity.commodityid) as count_shop,time,img_link FROM commodity join shop_commodity ON shop_commodity.commodityid=commodity.id WHERE type='mobile' GROUP BY commodity.id,name,low_price,high_price,time,img_link";
    
     con.query(sql,function(err,result){
@@ -80,7 +82,9 @@ router.get("/", authenticateToken,(req,res)=>{
                         high_price:index.price,
                         time:index.time,
                         count_shop:index.count_shop,
-                        img_link:index.img_link
+                        img_link:index.img_link,
+                        low_price:index.low_price,
+                        high_price:index.high_price
                     }
                 })
             })
