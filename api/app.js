@@ -7,7 +7,8 @@ var mobile_list=require("./routes/mobile_get_list");
 var tablet_list=require("./routes/tablet_get_list");
 var laptop_list=require("./routes/laptop_get_list");
 var profile=require("./routes/profile");
-var favlist=require("./routes/favlist")
+var favlist=require("./routes/favlist");
+var report=require("./routes/report");
 var app = express();
 app.use(express.json());
 app.use(cors());
@@ -18,4 +19,5 @@ app.use("/laptop",laptop_list)
 app.use("/tablet",tablet_list)
 app.use("/mobile",mobile_list)
 app.use("/favlist",favlist)
+app.use("/report",report)
 module.exports = app;
