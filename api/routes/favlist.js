@@ -56,4 +56,30 @@ router.delete("/delete",authenticateToken,(req,res)=>{
         })
     })
 })
+router.get("/get",authenticateToken,(req,res)=>{
+      var userid=req.body.userid;
+      var sql="SELECT * FROM fav_commodity_list join commodity on fav_commodity_list.commodityid=commodity.id WHERE fav_commodity_list.userid='"+userid+"'";
+      con.query(sql,function(err,result){
+        if(err) throw err;
+        if(result.length==0){
+          res.status(200).send({
+            products:[],
+            code:200
+          })
+        }else{
+          res.status(200).send({
+            products:result.map((index)=>{
+              return{
+                 name:index.name,
+                 imglink:index.img_link,
+                 low_price:index.low_price,
+                 high_price:index.high_price,
+                 productid:index.commodityid
+
+              }
+            })
+          })
+        }
+      })
+})
 module.exports = router;
