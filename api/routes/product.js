@@ -31,7 +31,7 @@ con.connect(function (err) {
     });
   }
 
-router.get("/gethop",(req,res)=>{
+router.get("/getshop",(req,res)=>{
     var productid=req.body.productid;
     var type=req.body.type;
     if(type=="laptop"){
@@ -81,5 +81,5 @@ router.get("/gethop",(req,res)=>{
     
     })
 })
-
+router.get("/get")
 module.exports = router;
