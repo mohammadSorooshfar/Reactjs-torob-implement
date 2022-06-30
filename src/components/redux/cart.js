@@ -4,7 +4,7 @@ const initialState = {
   user: {},
   products: [],
   selectedProduct: {},
-  selectedProductShops: [],
+  selectedProductDetails: {},
 };
 export const cartSlice = createSlice({
   name: "cart",
@@ -19,8 +19,8 @@ export const cartSlice = createSlice({
     addSelectedProduct: (state, action) => {
       state.selectedProduct = action.payload;
     },
-    addSelectedProductShops: (state, action) => {
-      state.selectedProductShops = action.payload;
+    addSelectedProductDetails: (state, action) => {
+      state.selectedProductDetails = action.payload;
     },
   },
 });
@@ -29,6 +29,6 @@ export const {
   saveUser,
   getProducts,
   addSelectedProduct,
-  addSelectedProductShops,
+  addSelectedProductDetails,
 } = cartSlice.actions;
 export default cartSlice.reducer;

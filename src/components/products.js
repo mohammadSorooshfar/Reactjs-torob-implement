@@ -8,7 +8,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Accordion from "react-bootstrap/Accordion";
 import NavbarTorob from "./navbar";
 import { useSelector, useDispatch } from "react-redux";
-import { addSelectedProduct, addSelectedProductShops } from "./redux/cart";
+import { addSelectedProduct, addSelectedProductDetails } from "./redux/cart";
 import axios from "axios";
 export default function Products(props) {
   const navigate = useNavigate();
@@ -19,17 +19,20 @@ export default function Products(props) {
   const productList = useSelector((state) => state.cart.products);
   const setProduct = (product) => {
     dispatch(addSelectedProduct(product));
+    let bodyParameters = {
+      productid: product.id,
+      type: product.type,
+    };
     console.log(product);
     axios
-      .get(`http://localhost:9000/signin/`)
+      .get(`http://localhost:9000/product/getshop`, bodyParameters)
       .then((res) => {
-        dispatch(addSelectedProductShops(res.data));
-        navigate("/profile");
+        dispatch(addSelectedProductDetails(res.data));
+        navigate("/product");
       })
       .catch((e) => {
         console.log(e);
       });
-    navigate("/product");
   };
   const addToFav = (product) => {
     const config = {
