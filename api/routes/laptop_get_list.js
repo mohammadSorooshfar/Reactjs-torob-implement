@@ -32,7 +32,7 @@ con.connect(function (err) {
   }
 router.get("/:type",function(req, res) {
     var type_phone=req.params.type;
-    var sql="SELECT commodity.id,name,low_price,high_price,time,COUNT(shop_commodity.commodityid) as count_shop,time,img_link FROM commodity join shop_commodity ON shop_commodity.commodityid=commodity.id WHERE commodity.type='laptop' AND model='"+type_phone+"' GROUP BY commodity.id,name,low_price,high_price,time,img_link";
+    var sql="SELECT type,commodity.id,name,low_price,high_price,time,COUNT(shop_commodity.commodityid) as count_shop,time,img_link FROM commodity join shop_commodity ON shop_commodity.commodityid=commodity.id WHERE commodity.type='laptop' AND model='"+type_phone+"' GROUP BY commodity.id,name,low_price,high_price,time,img_link";
     console.log(sql)
     con.query(sql,function(err,result){
         if(err) throw err;
@@ -54,7 +54,8 @@ router.get("/:type",function(req, res) {
                         count_shop:index.count_shop,
                         img:index.img_link,
                         low_price:index.low_price,
-                        high_price:index.high_price
+                        high_price:index.high_price,
+                        type:index.type
                     }
                 })
             })
@@ -62,7 +63,7 @@ router.get("/:type",function(req, res) {
     })
 });
 router.get("/",(req,res)=>{
-    var sql="SELECT commodity.id,name,low_price,high_price,time,COUNT(shop_commodity.commodityid) as count_shop,time,img_link FROM commodity join shop_commodity ON shop_commodity.commodityid=commodity.id WHERE type='laptop' GROUP BY commodity.id,name,low_price,high_price,time,img_link";
+    var sql="SELECT type,commodity.id,name,low_price,high_price,time,COUNT(shop_commodity.commodityid) as count_shop,time,img_link FROM commodity join shop_commodity ON shop_commodity.commodityid=commodity.id WHERE type='laptop' GROUP BY commodity.id,name,low_price,high_price,time,img_link";
     console.log(sql)
     con.query(sql,function(err,result){
         if(err) throw err;
@@ -84,7 +85,8 @@ router.get("/",(req,res)=>{
                         count_shop:index.count_shop,
                         img_link:index.img_link,
                         low_price:index.low_price,
-                        high_price:index.high_price
+                        high_price:index.high_price,
+                        type:index.type
                     }
                 })
             })
