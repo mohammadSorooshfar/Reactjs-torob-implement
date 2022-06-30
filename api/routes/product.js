@@ -39,7 +39,7 @@ router.get("/getshop/:productid/:type",(req,res)=>{
     }else{
         var sql="SELECT ram,weight,color,warranty,commodity.name as commodityname,shop_commodity.commodityid,shop.name as shopname ,shop.id as shopid,shop.city as shopcity,shop_commodity.price as shopprice,shop_commodity.link as shoplink  from commodity join shop_commodity on shop_commodity.commodityid=commodity.id join "+type+" on "+type+".commodityid=commodity.id join shop on shop.id=shop_commodity.shopid where shop_commodity.commodityid='"+productid+"'"
     }
-    
+    console.log(sql)
     con.query(sql,function(err,result){
         if(err) throw err;
         if(type=="laptop"){
@@ -62,12 +62,9 @@ router.get("/getshop/:productid/:type",(req,res)=>{
                 })
             })
         }else{
-            if(result.length==0){
                 res.send({
-
-                })
-            }else{
-                res.send({
+                    productname:result[0].commodityname,
+                    product:result[0].commodityid,
                     ram:result[0].color,
                     gpu:result[0].ram,
                     weight	:result[0].weight,
@@ -82,7 +79,7 @@ router.get("/getshop/:productid/:type",(req,res)=>{
                         }
                     })
                 })
-            }
+            
           
         }
     
