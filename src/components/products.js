@@ -14,7 +14,7 @@ export default function Products(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.cart.user);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState([]);
 
   const productList = useSelector((state) => state.cart.products);
   const setProduct = (product) => {
@@ -30,6 +30,50 @@ export default function Products(props) {
         console.log(e);
       });
     navigate("/product");
+  };
+  const addToFav = (product) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const bodyParameters = {
+      commodityid: product.id,
+      userid: user.id,
+    };
+    console.log(user);
+    axios
+      .post(`http://localhost:9000/favlist/add`, bodyParameters, config)
+      .then((res) => {
+        console.log(res.data);
+        let likedProducts = [...liked, product.id];
+        setLiked(likedProducts);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const removeFromFav = (product) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const bodyParameters = {
+      commodityid: product.id,
+      userid: user.id,
+    };
+    console.log(user);
+    axios
+      .delete(`http://localhost:9000/favlist/delete`, bodyParameters, config)
+      .then((res) => {
+        let likedProducts = [...liked];
+        likedProducts.splice(likedProducts.indexOf(product.id), 1);
+        setLiked(likedProducts);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   return (
     <>
@@ -110,8 +154,19 @@ export default function Products(props) {
                   return (
                     <div className="col-lg-3 col-6">
                       <div class="card p-1">
-                        <span class="wish-icon me-2">
-                          <i class="fa fa-heart-o"></i>
+                        <span
+                          class="wish-icon me-2"
+                          onClick={() => {
+                            liked.indexOf(product.id) === -1
+                              ? addToFav(product)
+                              : removeFromFav(product);
+                          }}
+                        >
+                          {liked.indexOf(product.id) === -1 ? (
+                            <i class="fa fa-heart-o"></i>
+                          ) : (
+                            <i class="fa fa-heart"></i>
+                          )}
                         </span>
                         <img
                           class="card-img-top product-img"

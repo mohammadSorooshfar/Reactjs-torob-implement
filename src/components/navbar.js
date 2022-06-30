@@ -11,10 +11,11 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { getProducts } from "./redux/cart";
 import { useSelector, useDispatch } from "react-redux";
+import { saveUser } from "./redux/cart";
 export default function NavbarTorob(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.cart.user);
+  const [user, setUser] = useState(useSelector((state) => state.cart.user));
   function checkCategory(pageLoc) {
     console.log(pageLoc);
     axios
@@ -28,6 +29,10 @@ export default function NavbarTorob(props) {
         console.log(e);
       });
   }
+  const logOut = () => {
+    setUser({});
+    dispatch(saveUser({}));
+  };
 
   return (
     <>
@@ -56,6 +61,7 @@ export default function NavbarTorob(props) {
             {user.username ? (
               <DropdownButton id="dropdown-basic-button" title={user.username}>
                 <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                <Dropdown.Item onClick={() => logOut()}>Log out</Dropdown.Item>
               </DropdownButton>
             ) : (
               <button
