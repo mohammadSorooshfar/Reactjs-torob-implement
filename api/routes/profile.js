@@ -71,7 +71,7 @@ router.post("/shop_owner/add_product",authenticateToken,function(req, res){
       var date=new Date();
       var time=date.getTime();
 
-      if(type="laptop"){
+      if(type=="laptop"){
         var cpu=req.body.cpu;
         var gpu=req.body.gpu;
         var page_dimensions=req.body.page_dimensions;
@@ -140,7 +140,7 @@ router.post("/shop_owner/add_product",authenticateToken,function(req, res){
                 })
           }
         })
-      }else if(type="mobile"){
+      }else if(type=="mobile"){
         var weight=req.body.weight;
         var color=req.body.color;
         var warranty=req.body.warranty;
@@ -278,4 +278,5 @@ router.post("/shop_owner/add_product",authenticateToken,function(req, res){
         })
       }
 })
+
 module.exports = router;
