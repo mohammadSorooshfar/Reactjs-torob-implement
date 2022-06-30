@@ -16,18 +16,18 @@ function App() {
           <Route path="/" element={<Home />} exact />
           <Route path="/signup" element={<Signup />} exact />
           <Route path="/login" element={<Login />} exact />
-          <Route path="/mobiles" element={<Products />} exact />
-          <Route path="/tablets" element={<Products />} exact />
-          <Route path="/laptops" element={<Products />} exact />
-          <Route path="/mobiles/samsung" element={<Products />} exact />
-          <Route path="/tablets/samsung" element={<Products />} exact />
-          <Route path="/laptops/lenovo" element={<Products />} exact />
-          <Route path="/mobiles/xiaomi" element={<Products />} exact />
-          <Route path="/tablets/xiaomi" element={<Products />} exact />
-          <Route path="/laptops/asus" element={<Products />} exact />
-          <Route path="/mobiles/apple" element={<Products />} exact />
-          <Route path="/tablets/apple" element={<Products />} exact />
-          <Route path="/laptops/apple" element={<Products />} exact />
+          <Route path="/mobile" element={<Products />} exact />
+          <Route path="/tablet" element={<Products />} exact />
+          <Route path="/laptop" element={<Products />} exact />
+          <Route path="/mobile/samsung" element={<Products />} exact />
+          <Route path="/tablet/samsung" element={<Products />} exact />
+          <Route path="/laptop/lenovo" element={<Products />} exact />
+          <Route path="/mobile/xiaomi" element={<Products />} exact />
+          <Route path="/tablet/xiaomi" element={<Products />} exact />
+          <Route path="/laptop/asus" element={<Products />} exact />
+          <Route path="/mobile/apple" element={<Products />} exact />
+          <Route path="/tablet/apple" element={<Products />} exact />
+          <Route path="/laptop/apple" element={<Products />} exact />
           <Route path="/shop/iphone" element={<ProductDetail />} exact />
           <Route path="/profile" element={<Profile />} exact />
         </Routes>

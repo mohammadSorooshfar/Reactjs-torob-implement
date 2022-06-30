@@ -5,97 +5,12 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import NavbarTorob from "./navbar";
 export default function Home(props) {
   const navigate = useNavigate();
   return (
     <>
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Toggle />
-          <Navbar.Collapse
-            className="ms-5 justify-content-between"
-            id="basic-navbar-nav"
-          >
-            <Nav>
-              <NavDropdown title="موبایل" className="me-5">
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/mobiles">
-                    گوشی موبایل{" "}
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/mobiles/samsung">
-                    گوشی سامسونگ{" "}
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/mobiles/xiaomi">
-                    گوشی شیائومی
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/mobiles/apple">
-                    گوشی اپل
-                  </Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="تبلت" className="me-5">
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/tablets">
-                    تبلت
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/tablets/samsung">
-                    تبلت سامسونگ
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/tablets/xiaomi">
-                    تبلت شیائومی
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/tablets/apple">
-                    تبلت اپل
-                  </Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="لپ تاپ" className="me-5">
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/laptops">
-                    لپ تاپ و نوت بوک{" "}
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/laptops/lenovo">
-                    لپ تاپ لنوو
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/laptops/asus">
-                    لپ تاپ ایسوس
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-link" to="/laptops/apple">
-                    لپ تاپ اپل
-                  </Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate("/signup")}
-            >
-              ثبت نام یا ورود
-            </button>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <NavbarTorob />
       <Container className="py-5">
         <div className="d-flex justify-content-center flex-column align-items-center mt-5">
           <div className="d-flex justify-content-center align-items-center ">

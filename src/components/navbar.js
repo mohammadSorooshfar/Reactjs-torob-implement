@@ -14,14 +14,9 @@ export default function NavbarTorob(props) {
   const dispatch = useDispatch();
   function checkCategory(pageLoc) {
     console.log(pageLoc);
-    const config = {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJ0YWhhbmkubS5oMTFAZ21haWwuY29tIiwiaWF0IjoxNjU2NDg2MjgwLCJleHAiOjE2NTY0ODgwODB9.95whzpkv9SViCMOl8aKZwgbEmPbYk2PVXkwF91Y8oto`,
-      },
-    };
 
     axios
-      .get(`http://localhost:9000${pageLoc}`, config)
+      .get(`http://localhost:9000${pageLoc}`)
       .then((res) => {
         dispatch(getProducts(res.data.products));
         console.log(res.data.products);
