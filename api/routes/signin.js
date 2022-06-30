@@ -11,7 +11,7 @@ dotenv.config();
 process.env.TOKEN_SECRET;
 
 function generateAccessToken(userId) {
-    return jwt.sign(userId, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
+    return jwt.sign(userId, process.env.TOKEN_SECRET);
   }
 
 var con = mysql.createConnection({
@@ -37,6 +37,7 @@ router.post("/", function(req, res) {
             
             const token = generateAccessToken({ userid: req.body.email });
             res.status(200).send({
+                userid:result[0].id,
                 email:result[0].email,
                 role:result[0].type,
                 username:result[0].username,

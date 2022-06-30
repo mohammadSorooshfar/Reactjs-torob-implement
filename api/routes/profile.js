@@ -68,7 +68,7 @@ router.put(
     });
   }
 );
-router.post("/shop_owner/add_product", function (req, res) {
+router.post("/shop_owner/add_product", authenticateToken, function (req, res) {
   var pname = req.body.pname;
   var pprice = req.body.pprice;
   var plink = req.body.plink;
@@ -372,6 +372,7 @@ router.post("/shop_owner/add_product", function (req, res) {
 
                 var max = result.max;
                 var min = result.min;
+
                 var sql5 =
                   "UPDATE commodity SET low_price='" +
                   min +
@@ -453,5 +454,53 @@ router.post("/shop_owner/add_product", function (req, res) {
       }
     });
   }
+});
+router.post("/shop_owner/add_shop", authenticateToken, (req, res) => {
+  var shop_name = req.body.shopname;
+  var shop_city = req.body.shop_city;
+  var userid = req.body.userid;
+  var sql = "SELECT * from shop where name='" + shop_name + "'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+
+    if (result.length != 0) {
+      res.status(400).send({
+        message: "این فروشگاه قبلا ایجاد شده",
+        code: 400,
+      });
+    } else {
+      var sql2 =
+        "INSERT INTO shop (name,city,userid) VALUES ('" +
+        shop_name +
+        "','" +
+        shop_city +
+        "','" +
+        userid +
+        "')";
+      con.query(sql2, function (err, result) {
+        if (err) throw err;
+        res.status(200).send({
+          message: "فروشگاه با موفقیت اضافه شد",
+        });
+      });
+    }
+  });
+});
+router.get("/shop_owner/getshop_user/:userid", (req, res) => {
+  var userid = req.params.userid;
+  var sql = "SELECT * FROM shop where userid='" + userid + "'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    res.status(200).send({
+      message: "در خواست با موفقیت انجام شد.",
+      shops: result.map((index) => {
+        return {
+          shopname: index.name,
+          city: index.city,
+          userid: index.userid,
+        };
+      }),
+    });
+  });
 });
 module.exports = router;
