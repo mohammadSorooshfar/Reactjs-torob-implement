@@ -28,7 +28,7 @@ function App() {
           <Route path="/mobile/apple" element={<Products />} exact />
           <Route path="/tablet/apple" element={<Products />} exact />
           <Route path="/laptop/apple" element={<Products />} exact />
-          <Route path="/shop/iphone" element={<ProductDetail />} exact />
+          <Route path="/product" element={<ProductDetail />} exact />
           <Route path="/profile" element={<Profile />} exact />
         </Routes>
       </div>

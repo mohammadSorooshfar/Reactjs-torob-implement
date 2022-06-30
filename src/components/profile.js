@@ -10,6 +10,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import NavbarTorob from "./navbar";
+import axios from "axios";
 export default function Profile(props) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.cart.user);
@@ -24,10 +25,12 @@ export default function Profile(props) {
     name: "",
     price: "",
     url: "",
-    garanty: "",
+    garantyOrScreenSize: "",
     colorOrCpu: "",
-    weight: "",
+    weightOrGpu: "",
     ram: "",
+    brand: "",
+    image: "",
   });
   const role = user.role;
   const changeProductDetail = (e, property) => {
@@ -37,11 +40,72 @@ export default function Profile(props) {
   };
   const onEditFormSubmit = (e) => {
     e.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const bodyParameters = {
+      email: emailInput,
+      oldusername: user.username,
+      newusername: usernameInput,
+      number: phoneInput,
+    };
+
+    axios
+      .put(
+        `http://localhost:9000/profile/shop_owner/change_profile`,
+        bodyParameters,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
     setUsername(usernameInput);
     setEmail(emailInput);
   };
   const onAddFormSubmit = (e) => {
     e.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    console.log(category);
+
+    const bodyParameters = {
+      pname: productDetails.name,
+      pprice: productDetails.price,
+      plink: productDetails.url,
+      pimglink: productDetails.image,
+      ram: productDetails.ram,
+      shopid: "3",
+      model: productDetails.brand,
+      type: category,
+      cpu: productDetails.colorOrCpu,
+      gpu: productDetails.weightOrGpu,
+      page_dimensions: productDetails.garantyOrScreenSize,
+      color: productDetails.colorOrCpu,
+      weight: productDetails.weightOrGpu,
+      warranty: productDetails.garantyOrScreenSize,
+    };
+    axios
+      .post(
+        `http://localhost:9000/profile/shop_owner/add_product`,
+        bodyParameters,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
     console.log(productDetails);
   };
 
@@ -210,6 +274,26 @@ export default function Profile(props) {
                   <div className="row mt-5">
                     <div className="col">
                       <Form.Group controlId="formBasicPassword">
+                        <Form.Label>برند</Form.Label>
+                        <Form.Control
+                          type="text"
+                          onChange={(e) => changeProductDetail(e, "brand")}
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col">
+                      <Form.Group controlId="formBasicEmail">
+                        <Form.Label>لینک عکس</Form.Label>
+                        <Form.Control
+                          type="url"
+                          onChange={(e) => changeProductDetail(e, "image")}
+                        />
+                      </Form.Group>
+                    </div>
+                  </div>
+                  <div className="row mt-5">
+                    <div className="col">
+                      <Form.Group controlId="formBasicPassword">
                         <Form.Label>نام محصول</Form.Label>
                         <Form.Control
                           type="text"
@@ -244,7 +328,9 @@ export default function Profile(props) {
                         </Form.Label>
                         <Form.Control
                           type="text"
-                          onChange={(e) => changeProductDetail(e, "garanty")}
+                          onChange={(e) =>
+                            changeProductDetail(e, "garantyOrScreenSize")
+                          }
                         />
                       </Form.Group>
                     </div>
@@ -266,7 +352,9 @@ export default function Profile(props) {
                         </Form.Label>
                         <Form.Control
                           type="text"
-                          onChange={(e) => changeProductDetail(e, "weight")}
+                          onChange={(e) =>
+                            changeProductDetail(e, "weightOrGpu")
+                          }
                         />{" "}
                       </Form.Group>
                     </div>

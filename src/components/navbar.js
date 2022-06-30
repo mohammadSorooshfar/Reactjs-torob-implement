@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { getProducts } from "./redux/cart";
@@ -12,9 +14,9 @@ import { useSelector, useDispatch } from "react-redux";
 export default function NavbarTorob(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.cart.user);
   function checkCategory(pageLoc) {
     console.log(pageLoc);
-
     axios
       .get(`http://localhost:9000${pageLoc}`)
       .then((res) => {
@@ -51,12 +53,18 @@ export default function NavbarTorob(props) {
                 placeholder="نام کالا را وارد کنید"
               />
             </div>
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate("/signup")}
-            >
-              ثبت نام یا ورود
-            </button>
+            {user.username ? (
+              <DropdownButton id="dropdown-basic-button" title={user.username}>
+                <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+              </DropdownButton>
+            ) : (
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/signup")}
+              >
+                ثبت نام یا ورود
+              </button>
+            )}
           </div>{" "}
           <Nav className="mt-3">
             <NavDropdown title="موبایل" className="me-5">

@@ -8,28 +8,28 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import NavbarTorob from "./navbar";
+import { useSelector, useDispatch } from "react-redux";
 export default function ProductDetail(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const product = useSelector((state) => state.cart.selectedProduct);
   const navigate = useNavigate();
   return (
     <>
       <NavbarTorob />
       <div className="product-detail-main d-flex justify-content-between">
         <div className="w-75 bg-gray">
-          <div className="bg-white product-name-row d-flex align-items-center px-5">
+          <div className="bg-white product-name-row d-flex align-items-center px-5 py-4">
             <div>
-              <img
-                className="product-detail-image"
-                src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
-                alt=""
-              />
+              <img className="product-detail-image" src={product.img} alt="" />
             </div>{" "}
             <div>
-              <h2>گوشی موبایل آیفون ۱۳</h2>
-              <p className="text-danger">قیمت از ۴۵,۰۰۰,۰۰۰ تا ۶۰,۰۰۰,۰۰۰</p>
+              <h2>{product.name}</h2>
+              <p className="text-danger">
+                قیمت از {product.low_price} تا {product.high_price}
+              </p>
             </div>
           </div>
           <div className="bg-white d-flex flex-column mt-4 p-4 ">
@@ -85,15 +85,11 @@ export default function ProductDetail(props) {
           <Modal.Title>گزارش</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="d-flex align-items-center">
-            <img
-              className="product-detail-image"
-              src="https://m.media-amazon.com/images/I/71gm8v4uPBL._SL1500_.jpg"
-              alt=""
-            />
+          <div className="d-flex align-items-center p-1 mb-4">
+            <img className="product-detail-image" src={product.img} alt="" />
             <div>
               <h2>هیماشاپ</h2>
-              <h5>گوشی موبایل آیفون 13</h5>
+              <h5>{product.name}</h5>
             </div>
           </div>
           <div class="form-check checkbox-rounded checkbox-cerulean-blue-filled w-50">

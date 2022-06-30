@@ -83,3 +83,13 @@ main {
   cursor: pointer;
   width: fit-content;
 }
+.product-img {
+  width: 200px;
+  height: 200px;
+}
+.product-name {
+  font-size: 16px;
+}
+.card {
+  height: 400px;
+}

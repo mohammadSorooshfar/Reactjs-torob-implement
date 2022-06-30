@@ -8,13 +8,29 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Accordion from "react-bootstrap/Accordion";
 import NavbarTorob from "./navbar";
 import { useSelector, useDispatch } from "react-redux";
+import { addSelectedProduct, addSelectedProductShops } from "./redux/cart";
+import axios from "axios";
 export default function Products(props) {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.cart.user);
   const [liked, setLiked] = useState(false);
 
   const productList = useSelector((state) => state.cart.products);
-  console.log(productList);
+  const setProduct = (product) => {
+    dispatch(addSelectedProduct(product));
+    console.log(product);
+    axios
+      .get(`http://localhost:9000/signin/`)
+      .then((res) => {
+        dispatch(addSelectedProductShops(res.data));
+        navigate("/profile");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    navigate("/product");
+  };
   return (
     <>
       <NavbarTorob />
@@ -88,25 +104,86 @@ export default function Products(props) {
         </div>
 
         <div className="row mb-3">
-          {productList.map((product) => {
-            return (
-              <div className="col-lg-3 col-6">
-                <div class="card p-1">
-                  <span class="wish-icon me-2">
-                    <i class="fa fa-heart-o"></i>
-                  </span>
-                  <img class="card-img-top" src={product.img} alt="Card cap" />
-                  <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h5 class="card-title text-secondary">{product.name}</h5>
-                    <p class="card-text">از {product.low_price} تومان</p>
-                    <Link to="/shop/iphone" class="btn btn-outline-success">
-                      مشاهده فروشندگان
-                    </Link>
+          {Object.keys(user).length !== 0
+            ? user.role === "normal"
+              ? productList.map((product) => {
+                  return (
+                    <div className="col-lg-3 col-6">
+                      <div class="card p-1">
+                        <span class="wish-icon me-2">
+                          <i class="fa fa-heart-o"></i>
+                        </span>
+                        <img
+                          class="card-img-top product-img"
+                          src={product.img}
+                          alt="Card cap"
+                        />
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                          <h5 class="card-title text-secondary product-name">
+                            {product.name}
+                          </h5>
+                          <p class="card-text">از {product.low_price} تومان</p>
+                          <button
+                            onClick={() => setProduct(product)}
+                            class="btn btn-outline-success"
+                          >
+                            مشاهده فروشندگان
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              : productList.map((product) => {
+                  return (
+                    <div className="col-lg-3 col-6">
+                      <div class="card p-1">
+                        <img
+                          class="card-img-top product-img"
+                          src={product.img}
+                          alt="Card cap"
+                        />
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                          <h5 class="card-title text-secondary product-name">
+                            {product.name}
+                          </h5>
+                          <p class="card-text">از {product.low_price} تومان</p>
+                          <button
+                            onClick={() => setProduct(product)}
+                            class="btn btn-outline-success"
+                          >
+                            افزودن محصول
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+            : productList.map((product) => {
+                return (
+                  <div className="col-lg-3 col-6">
+                    <div class="card p-1">
+                      <img
+                        class="card-img-top product-img"
+                        src={product.img}
+                        alt="Card cap"
+                      />
+                      <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <h5 class="card-title text-secondary product-name">
+                          {product.name}
+                        </h5>
+                        <p class="card-text">از {product.low_price} تومان</p>
+                        <button
+                          onClick={() => setProduct(product)}
+                          class="btn btn-outline-success"
+                        >
+                          مشاهده فروشندگان
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
         </div>
       </main>
     </>
