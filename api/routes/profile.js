@@ -14,7 +14,7 @@ con.connect(function (err) {
   const dotenv = require('dotenv');
   dotenv.config();
   process.env.TOKEN_SECRET;
-  function authenticateToken(req, res, next) {
+function authenticateToken(req, res, next) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
    
@@ -70,6 +70,7 @@ router.post("/shop_owner/add_product",authenticateToken,function(req, res){
       var type=req.body.type;
       var date=new Date();
       var time=date.getTime();
+      console.log(time);
       var userid=req.body.userid;
       var sql_new="SELECT * FROM shop WHERE userid='"+userid+"' AND name='"+shopname+"'";
       con.query(sql_new,function(err,result){
@@ -319,6 +320,7 @@ router.get("/shop_owner/getshop_user/:userid",(req,res)=>{
             message:"در خواست با موفقیت انجام شد.",
             shops:result.map((index)=>{
               return{
+                shopid:index.id,
                 shopname:index.name,
                 city:index.city,
                 userid:index.userid
