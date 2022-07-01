@@ -33,14 +33,14 @@ export default function ProductDetail(props) {
       let bodyParameters;
       if (report.length == 1) {
         bodyParameters = {
-          commodityid: productDetails.product,
+          commodityid: productDetails.productid,
           report1: report[0],
           report2: "",
           shopid: modalDetails.shopid,
         };
       } else {
         bodyParameters = {
-          commodityid: productDetails.product,
+          commodityid: productDetails.productid,
           report1: report[0],
           report2: report[1],
           shopid: modalDetails.shopid,
@@ -80,38 +80,43 @@ export default function ProductDetail(props) {
             </div>
           </div>
           <div className="bg-white d-flex flex-column mt-4 p-4 ">
-            {productDetails.shops.map((shop) => {
-              return (
-                <div className="d-flex justify-content-between align-items-center p-4 border mb-3">
-                  <div>
-                    <p className="m-0">{shop.shopname}</p>
-                    <p className="m-0 text-secondary">{shop.shopcity}</p>
-                  </div>
-                  <div>
-                    <p className="text-danger m-0">{shop.shopprice} تومان</p>
-                  </div>
-                  <div>
-                    <button
-                      className="btn btn-outline-warning ms-2"
-                      onClick={() => {
-                        setModalDetails(shop);
-                        handleShow();
-                      }}
-                    >
-                      گزارش
-                    </button>
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => {
-                        window.open(shop.shoplink, "_blank");
-                      }}
-                    >
-                      خرید اینترنتی
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+            {productDetails.shops
+              ? productDetails.shops.map((shop) => {
+                  return (
+                    <div className="d-flex justify-content-between align-items-center p-4 border mb-3">
+                      <div>
+                        <p className="m-0">{shop.shopname}</p>
+                        <p className="m-0 text-secondary">{shop.shopcity}</p>
+                      </div>
+                      <div>
+                        <p className="text-danger m-0">
+                          {shop.shopprice} تومان
+                        </p>
+                      </div>
+                      <div>
+                        <button
+                          className="btn btn-outline-warning ms-2"
+                          onClick={() => {
+                            setReport([]);
+                            setModalDetails(shop);
+                            handleShow();
+                          }}
+                        >
+                          گزارش
+                        </button>
+                        <button
+                          className="btn btn-outline-danger"
+                          onClick={() => {
+                            window.open(shop.shoplink, "_blank");
+                          }}
+                        >
+                          خرید اینترنتی
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              : ""}
           </div>
         </div>
         <div className="w-20 bg-white p-4">
@@ -124,7 +129,7 @@ export default function ProductDetail(props) {
             <p className="text-secondary">
               {product.type === "laptop"
                 ? productDetails.page_dimensions
-                : "وزن"}
+                : productDetails.warranty}
             </p>
           </div>
           <div>
@@ -133,7 +138,9 @@ export default function ProductDetail(props) {
               {product.type === "laptop" ? "پردازنده" : "رنگ"}
             </p>
             <p className="text-secondary">
-              {product.type === "laptop" ? productDetails.cpu : "وزن"}
+              {product.type === "laptop"
+                ? productDetails.cpu
+                : productDetails.color}
             </p>
           </div>
 
@@ -143,7 +150,9 @@ export default function ProductDetail(props) {
               {product.type === "laptop" ? "کارت گرافیک" : "وزن"}
             </p>
             <p className="text-secondary">
-              {product.type === "laptop" ? productDetails.gpu : "وزن"}
+              {product.type === "laptop"
+                ? productDetails.gpu
+                : productDetails.weight}
             </p>
           </div>
           <div>
@@ -160,7 +169,7 @@ export default function ProductDetail(props) {
           <div className="d-flex align-items-center p-1 mb-4">
             <img
               className="product-detail-image ms-4"
-              src={product.img}
+              src={product.img_link}
               alt=""
             />
             <div>

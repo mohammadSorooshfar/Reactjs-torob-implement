@@ -16,6 +16,7 @@ export const cartSlice = createSlice({
     },
     saveUserFavorites: (state, action) => {
       state.userFavorites = action.payload;
+      console.log(state.userFavorites);
     },
     getProducts: (state, action) => {
       state.products = action.payload;

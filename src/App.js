@@ -30,6 +30,7 @@ function App() {
           <Route path="/laptop/apple" element={<Products />} exact />
           <Route path="/product" element={<ProductDetail />} exact />
           <Route path="/profile" element={<Profile />} exact />
+          <Route path="/search" element={<Products />} exact />
         </Routes>
       </div>
     </>

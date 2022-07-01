@@ -5,13 +5,18 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import NavbarTorob from "./navbar";
 import axios from "axios";
 import { getProducts } from "./redux/cart";
 import { useSelector, useDispatch } from "react-redux";
+import { saveUser } from "./redux/cart";
 export default function Home(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const [user, setUser] = useState(useSelector((state) => state.cart.user));
   function checkCategory(pageLoc) {
     console.log(pageLoc);
 
@@ -26,6 +31,22 @@ export default function Home(props) {
         console.log(e);
       });
   }
+  const onSearch = () => {
+    axios
+      .get(`http://localhost:9000/search/${search}`)
+      .then((res) => {
+        dispatch(getProducts(res.data.products));
+        console.log(res.data.products);
+        navigate("/search");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const logOut = () => {
+    setUser({});
+    dispatch(saveUser({}));
+  };
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -161,12 +182,19 @@ export default function Home(props) {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate("/signup")}
-          >
-            ثبت نام یا ورود
-          </button>
+          {user.username ? (
+            <DropdownButton id="dropdown-basic-button" title={user.username}>
+              <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+              <Dropdown.Item onClick={() => logOut()}>Log out</Dropdown.Item>
+            </DropdownButton>
+          ) : (
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate("/signup")}
+            >
+              ثبت نام یا ورود
+            </button>
+          )}
         </Container>
       </Navbar>
       <Container className="py-5">
@@ -189,7 +217,11 @@ export default function Home(props) {
           </div>
           <div className="input-group w-50 mt-5">
             <div className="input-group-append">
-              <button className="btn btn-secondary" type="button">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={onSearch}
+              >
                 <i className="fa fa-search"></i>
               </button>
             </div>
@@ -197,6 +229,7 @@ export default function Home(props) {
               type="text"
               className="form-control rounded"
               placeholder="نام کالا را وارد کنید"
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </div>

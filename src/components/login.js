@@ -23,28 +23,7 @@ export default function Login(props) {
       .then((res) => {
         dispatch(saveUser(res.data));
         setWrong(false);
-        if (res.data.role === "normal") {
-          console.log("res");
-          const config = {
-            headers: {
-              Authorization: `Bearer ${res.data.token}`,
-            },
-          };
-          const bodyParameters = {
-            userid: res.data.userid,
-          };
-          console.log(config);
-          axios
-            .get(`http://localhost:9000/favlist/get`, bodyParameters, config)
-            .then((res) => {
-              console.log(res.data);
-              dispatch(saveUserFavorites(res.data));
-              navigate("/profile");
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        }
+        navigate("/profile");
       })
       .catch((e) => {
         console.log(e);

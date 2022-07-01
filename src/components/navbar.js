@@ -16,6 +16,19 @@ export default function NavbarTorob(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState(useSelector((state) => state.cart.user));
+  const [search, setSearch] = useState("");
+  const onSearch = () => {
+    axios
+      .get(`http://localhost:9000/search/${search}`)
+      .then((res) => {
+        dispatch(getProducts(res.data.products));
+        console.log(res.data.products);
+        navigate("/search");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   function checkCategory(pageLoc) {
     console.log(pageLoc);
     axios
@@ -49,18 +62,25 @@ export default function NavbarTorob(props) {
               <h2 className="text-danger ms-3" onClick={() => navigate("/")}>
                 ترب
               </h2>
-              <button className="btn btn-danger btn-search" type="button">
+              <button
+                className="btn btn-danger btn-search"
+                type="button"
+                onClick={onSearch}
+              >
                 <i className="fa fa-search"></i>
               </button>
               <input
                 type="text"
                 className="form-control input-search"
                 placeholder="نام کالا را وارد کنید"
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             {user.username ? (
               <DropdownButton id="dropdown-basic-button" title={user.username}>
-                <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/profile">Profile</Link>{" "}
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => logOut()}>Log out</Dropdown.Item>
               </DropdownButton>
             ) : (

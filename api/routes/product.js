@@ -34,20 +34,20 @@ router.get("/getshop/:productid/:type", (req, res) => {
   var type = req.params.type;
   if (type == "laptop") {
     var sql =
-      "SELECT gpu,cpu,ram,Page_dimensions,commodity.name as commodityname,shop_commodity.commodityid,shop.name as shopname ,shop.id as shopid,shop.city as shopcity,shop_commodity.price as shopprice,shop_commodity.link as shoplink  from commodity join shop_commodity on shop_commodity.commodityid=commodity.id join " +
+      "SELECT gpu,cpu,ram,Page_dimensions,commodity.name as commodityname,shop_commodity.commodityid,shop.name as shopname ,shop.id as shopid,shop.city as shopcity,shop_commodity.price as shopprice,shop_commodity.link as shoplink from commodity left join " +
       type +
       " on " +
       type +
-      ".commodityid=commodity.id join shop on shop.id=shop_commodity.shopid where shop_commodity.commodityid='" +
+      ".commodityid=commodity.id left join shop_commodity on shop_commodity.commodityid=commodity.id left join shop on shop.id=shop_commodity.shopid where commodity.id='" +
       productid +
       "'";
   } else {
     var sql =
-      "SELECT ram,weight,color,warranty,commodity.name as commodityname,shop_commodity.commodityid,shop.name as shopname ,shop.id as shopid,shop.city as shopcity,shop_commodity.price as shopprice,shop_commodity.link as shoplink  from commodity join shop_commodity on shop_commodity.commodityid=commodity.id join " +
+      "SELECT ram,weight,color,warranty,commodity.name as commodityname,shop_commodity.commodityid,shop.name as shopname ,shop.id as shopid,shop.city as shopcity,shop_commodity.price as shopprice,shop_commodity.link as shoplink from commodity left join " +
       type +
       " on " +
       type +
-      ".commodityid=commodity.id join shop on shop.id=shop_commodity.shopid where shop_commodity.commodityid='" +
+      ".commodityid=commodity.id left join shop_commodity on shop_commodity.commodityid=commodity.id left join shop on shop.id=shop_commodity.shopid where commodity.id='" +
       productid +
       "'";
   }
@@ -55,41 +55,53 @@ router.get("/getshop/:productid/:type", (req, res) => {
   con.query(sql, function (err, result) {
     if (err) throw err;
     if (type == "laptop") {
-      res.send({
-        productname: result[0].commodityname,
-        product: result[0].commodityid,
-        ram: result[0].ram,
-        gpu: result[0].gpu,
-        page_dimensions: result[0].Page_dimensions,
-        cpu: result[0].cpu,
-        shops: result.map((index) => {
-          return {
-            shopname: index.shopname,
-            shopid: index.shopid,
-            shopcity: index.shopcity,
-            shopprice: index.shopprice,
-            shoplink: index.shoplink,
-          };
-        }),
-      });
+      if (result.length == 0) {
+        res.send({
+          message: "فروشگاهی پیدا نشد",
+        });
+      } else {
+        res.send({
+          productname: result[0].commodityname,
+          productid: result[0].commodityid,
+          ram: result[0].ram,
+          gpu: result[0].gpu,
+          page_dimensions: result[0].Page_dimensions,
+          cpu: result[0].cpu,
+          shops: result.map((index) => {
+            return {
+              shopname: index.shopname,
+              shopid: index.shopid,
+              shopcity: index.shopcity,
+              shopprice: index.shopprice,
+              shoplink: index.shoplink,
+            };
+          }),
+        });
+      }
     } else {
-      res.send({
-        productname: result[0].commodityname,
-        product: result[0].commodityid,
-        ram: result[0].color,
-        gpu: result[0].ram,
-        weight: result[0].weight,
-        warranty: result[0].warranty,
-        shops: result.map((index) => {
-          return {
-            shopname: index.shopname,
-            shopid: index.shopid,
-            shopcity: index.shopcity,
-            shopprice: index.shopprice,
-            shoplink: index.shop,
-          };
-        }),
-      });
+      if (result.length == 0) {
+        res.send({
+          message: "فروشگاهی پیدا نشد",
+        });
+      } else {
+        res.send({
+          productname: result[0].commodityname,
+          productid: result[0].commodityid,
+          ram: result[0].ram,
+          color: result[0].color,
+          weight: result[0].weight,
+          warranty: result[0].warranty,
+          shops: result.map((index) => {
+            return {
+              shopname: index.shopname,
+              shopid: index.shopid,
+              shopcity: index.shopcity,
+              shopprice: index.shopprice,
+              shoplink: index.shoplink,
+            };
+          }),
+        });
+      }
     }
   });
 });

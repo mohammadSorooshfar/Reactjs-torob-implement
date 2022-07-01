@@ -13,6 +13,7 @@ export default function Signup(props) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("normal");
+  const [wrong, setWrong] = useState(false);
   const onSubmitForm = (e) => {
     e.preventDefault();
     let user = {
@@ -26,9 +27,11 @@ export default function Signup(props) {
       .post(`http://localhost:9000/signup/`, { ...user })
       .then((res) => {
         console.log(res.data);
+        setWrong(false);
         navigate("/login");
       })
       .catch((e) => {
+        setWrong(true);
         console.log(e);
       });
   };
@@ -48,6 +51,13 @@ export default function Signup(props) {
             />
             <h2 className="text-danger ms-3 fs-1">ترب</h2>
           </div>
+          {wrong ? (
+            <div class="alert alert-danger mb-0 mt-2" role="alert">
+              ایمیل یا نام کاربری تکراری میباشد
+            </div>
+          ) : (
+            ""
+          )}
           <Form
             className=" py-5 d-flex flex-column justify-content-center align-items-center"
             onSubmit={onSubmitForm}
@@ -58,6 +68,7 @@ export default function Signup(props) {
                 type="text"
                 placeholder="نام کاربری را وارد کنید"
                 onChange={(e) => setUsername(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-2" controlId="formBasicEmail">
@@ -66,6 +77,7 @@ export default function Signup(props) {
                 type="email"
                 placeholder="ایمیل را وارد کنید"
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </Form.Group>
 
@@ -83,7 +95,7 @@ export default function Signup(props) {
               <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Label>شماره</Form.Label>
                 <Form.Control
-                  type="email"
+                  type="phone"
                   placeholder="شماره را وارد کنید"
                   onChange={(e) => setEmail(e.target.value)}
                 />

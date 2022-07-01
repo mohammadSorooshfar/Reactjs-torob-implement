@@ -6,18 +6,42 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Accordion from "react-bootstrap/Accordion";
+import { useLocation } from "react-router-dom";
 import NavbarTorob from "./navbar";
 import { useSelector, useDispatch } from "react-redux";
-import { addSelectedProduct, addSelectedProductDetails } from "./redux/cart";
+import {
+  addSelectedProduct,
+  addSelectedProductDetails,
+  getProducts,
+} from "./redux/cart";
 import axios from "axios";
 import { type } from "@testing-library/user-event/dist/type";
 export default function Products(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.cart.user);
-  const [liked, setLiked] = useState([]);
-
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
   const productList = useSelector((state) => state.cart.products);
+  const [products, setProducts] = useState(
+    useSelector((state) => state.cart.products)
+  );
+  const likes = useSelector((state) => state.cart.userFavorites);
+
+  const [liked, setLiked] = useState(likes);
+  console.log(likes, liked);
+  const sampleLocation = useLocation();
+  const [lastLoc, setLastLoc] = useState(sampleLocation);
+
+  console.log(sampleLocation.pathname.includes("tablet"));
+  useEffect(() => {
+    if (sampleLocation !== lastLoc) {
+      setProducts(productList);
+      setLastLoc(sampleLocation);
+      setFrom("");
+      setTo("");
+    }
+  });
   const setProduct = (product) => {
     dispatch(addSelectedProduct(product));
 
@@ -48,8 +72,6 @@ export default function Products(props) {
       .post(`http://localhost:9000/favlist/add`, bodyParameters, config)
       .then((res) => {
         console.log(res.data);
-        let likedProducts = [...liked, product.id];
-        setLiked(likedProducts);
       })
       .catch((e) => {
         console.log(e);
@@ -77,6 +99,58 @@ export default function Products(props) {
         console.log(e);
       });
   };
+  const sortFunc = (e) => {
+    const searchParameter = e.target.value;
+    console.log(searchParameter);
+    let ProductsLists = products.slice();
+    if (searchParameter == "cheap") {
+      ProductsLists.sort(function (a, b) {
+        return a.low_price - b.low_price;
+      });
+    } else if (searchParameter == "luxury") {
+      ProductsLists.sort(function (a, b) {
+        return b.low_price - a.low_price;
+      });
+    } else if (searchParameter == "luxury") {
+      ProductsLists.sort(function (a, b) {
+        return b.time - a.time;
+      });
+    }
+    setProducts(ProductsLists);
+  };
+  const filterFunc = () => {
+    let ProductsLists = productList.slice();
+    console.log(from, to);
+    const filters = (product) => {
+      if (!to) {
+        setTo(1000000000);
+      }
+      if (!from) {
+        setFrom(0);
+      }
+      console.log(
+        product.low_price <= Number(to) && product.low_price >= Number(from)
+      );
+      return (
+        product.low_price <= Number(to) && product.low_price >= Number(from)
+      );
+    };
+    ProductsLists = ProductsLists.filter(filters);
+    setProducts(ProductsLists);
+  };
+  function checkCategory(pageLoc) {
+    console.log(pageLoc);
+    axios
+      .get(`http://localhost:9000${pageLoc}`)
+      .then((res) => {
+        dispatch(getProducts(res.data.products));
+        console.log(res.data.products);
+        navigate(pageLoc);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
   return (
     <>
       <NavbarTorob />
@@ -87,21 +161,65 @@ export default function Products(props) {
             <Accordion.Body>
               <div
                 className="brand-div d-flex justify-content-between align-items-center mb-2"
-                onClick={() => navigate("/mobiles/samsung")}
+                onClick={() => {
+                  if (sampleLocation.pathname.includes("tablet")) {
+                    checkCategory("/tablet/samsung");
+                  } else if (sampleLocation.pathname.includes("mobile")) {
+                    checkCategory("/mobile/samsung");
+                  } else {
+                    checkCategory("/laptop/lenovo");
+                  }
+                }}
               >
-                <p>سامسونگ</p>
-                <p>samsung</p>
+                <p>
+                  {sampleLocation.pathname.includes("laptop") ||
+                  sampleLocation.pathname.includes("search")
+                    ? "لنوو"
+                    : "سامسونگ"}
+                </p>
+                <p>
+                  {sampleLocation.pathname.includes("laptop") ||
+                  sampleLocation.pathname.includes("search")
+                    ? "lenovo"
+                    : "samsung"}
+                </p>
               </div>
               <div
                 className="brand-div d-flex justify-content-between align-items-center mb-2"
-                onClick={() => navigate("/mobiles/xiaomi")}
+                onClick={() => {
+                  if (sampleLocation.pathname.includes("tablet")) {
+                    checkCategory("/tablet/xiaomi");
+                  } else if (sampleLocation.pathname.includes("mobile")) {
+                    checkCategory("/mobile/xiaomi");
+                  } else {
+                    checkCategory("/laptop/asus");
+                  }
+                }}
               >
-                <p>شیائومی</p>
-                <p>xiaomi</p>
+                <p>
+                  {sampleLocation.pathname.includes("laptop") ||
+                  sampleLocation.pathname.includes("search")
+                    ? "ایسوس"
+                    : "شیائومی"}
+                </p>
+                <p>
+                  {sampleLocation.pathname.includes("laptop") ||
+                  sampleLocation.pathname.includes("search")
+                    ? "asus"
+                    : "xiaomi"}
+                </p>
               </div>
               <div
                 className="brand-div d-flex justify-content-between align-items-center mb-2"
-                onClick={() => navigate("/mobiles/apple")}
+                onClick={() => {
+                  if (sampleLocation.pathname.includes("tablet")) {
+                    checkCategory("/tablet/apple");
+                  } else if (sampleLocation.pathname.includes("mobile")) {
+                    checkCategory("/mobile/apple");
+                  } else {
+                    checkCategory("/laptop/apple");
+                  }
+                }}
               >
                 <p>اپل</p>
                 <p>apple</p>
@@ -120,7 +238,14 @@ export default function Products(props) {
                         از
                       </span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      value={from}
+                      onChange={(e) => {
+                        setFrom(e.target.value);
+                      }}
+                    />
                   </div>
                   <div class="input-group mb-3 w-40">
                     <div class="input-group-append">
@@ -128,10 +253,19 @@ export default function Products(props) {
                         تا
                       </span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      value={to}
+                      onChange={(e) => {
+                        setTo(e.target.value);
+                      }}
+                    />
                   </div>
                 </div>
-                <button className="btn btn-primary w-25">اعمال فیلتر</button>
+                <button className="btn btn-primary w-25" onClick={filterFunc}>
+                  اعمال فیلتر
+                </button>
               </div>
             </Accordion.Body>
           </Accordion.Item>
@@ -140,11 +274,18 @@ export default function Products(props) {
       <main>
         <div className="row mb-3">
           <div className="col-3">
-            <select class="form-select">
-              <option selected>مرتب سازی</option>
-              <option value="1">ارزان ترین</option>
-              <option value="2">گران ترین</option>
-              <option value="3">جدید ترین</option>
+            <select
+              class="form-select"
+              onChange={(e) => {
+                sortFunc(e);
+              }}
+            >
+              <option value="none" selected>
+                مرتب سازی
+              </option>
+              <option value="cheap">ارزان ترین</option>
+              <option value="luxury">گران ترین</option>
+              <option value="new">جدید ترین</option>
             </select>
           </div>
         </div>
@@ -152,22 +293,27 @@ export default function Products(props) {
         <div className="row mb-3">
           {Object.keys(user).length !== 0
             ? user.role === "normal"
-              ? productList.map((product) => {
+              ? products.map((product) => {
                   return (
                     <div className="col-lg-3 col-6">
                       <div class="card p-1">
                         <span
                           class="wish-icon me-2"
                           onClick={() => {
-                            liked.indexOf(product.id) === -1
-                              ? addToFav(product)
-                              : removeFromFav(product);
+                            console.log(product);
+                            liked.find((productInner) => {
+                              return productInner.productid == product.id;
+                            })
+                              ? removeFromFav(product)
+                              : addToFav(product);
                           }}
                         >
-                          {liked.indexOf(product.id) === -1 ? (
-                            <i class="fa fa-heart-o"></i>
-                          ) : (
+                          {liked.find((productInner) => {
+                            return productInner.productid == product.id;
+                          }) ? (
                             <i class="fa fa-heart"></i>
+                          ) : (
+                            <i class="fa fa-heart-o"></i>
                           )}
                         </span>
                         <img
@@ -191,13 +337,13 @@ export default function Products(props) {
                     </div>
                   );
                 })
-              : productList.map((product) => {
+              : products.map((product) => {
                   return (
                     <div className="col-lg-3 col-6">
                       <div class="card p-1">
                         <img
                           class="card-img-top product-img"
-                          src={product.img}
+                          src={product.img_link}
                           alt="Card cap"
                         />
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -216,13 +362,13 @@ export default function Products(props) {
                     </div>
                   );
                 })
-            : productList.map((product) => {
+            : products.map((product) => {
                 return (
                   <div className="col-lg-3 col-6">
                     <div class="card p-1">
                       <img
                         class="card-img-top product-img"
-                        src={product.img}
+                        src={product.img_link}
                         alt="Card cap"
                       />
                       <div class="card-body d-flex flex-column justify-content-center align-items-center">

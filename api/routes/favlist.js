@@ -28,7 +28,7 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
-router.post("/add", authenticateToken, (req, res) => {
+router.post("/add", (req, res) => {
   let commodityid = req.body.commodityid;
   let userid = req.body.userid;
   var date = new Date();
@@ -49,15 +49,16 @@ router.post("/add", authenticateToken, (req, res) => {
     });
   });
 });
-router.delete("/delete", authenticateToken, (req, res) => {
-  let commodityid = req.body.commodityid;
-  let userid = req.body.userid;
+router.delete("/delete/:userid/:commodityid", (req, res) => {
+  let commodityid = req.params.commodityid;
+  let userid = req.params.userid;
   var sql =
     "DELETE FROM fav_commodity_list WHERE userid='" +
     userid +
     "' AND commodityid='" +
     commodityid +
     "'";
+  console.log(sql);
   con.query(sql, function (err, result) {
     if (err) throw err;
     res.status(200).send({
@@ -66,8 +67,8 @@ router.delete("/delete", authenticateToken, (req, res) => {
     });
   });
 });
-router.get("/get", (req, res) => {
-  var userid = req.body.userid;
+router.get("/get/:userid", (req, res) => {
+  var userid = req.params.userid;
   var sql =
     "SELECT * FROM fav_commodity_list join commodity on fav_commodity_list.commodityid=commodity.id WHERE fav_commodity_list.userid='" +
     userid +
