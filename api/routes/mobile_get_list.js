@@ -52,7 +52,7 @@ router.get("/:type",function(req, res) {
                         high_price:index.price,
                         time:index.time,
                         count_shop:index.count_shop,
-                        img:index.img_link,
+                        img_link:index.img_link,
                         low_price:index.low_price,
                         high_price:index.high_price,
                         type:index.type
