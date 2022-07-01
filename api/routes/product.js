@@ -84,8 +84,8 @@ router.get("/getshop/:productid/:type", (req, res) => {
         res.send({
           productname: result[0].commodityname,
           product: result[0].commodityid,
-          ram: result[0].color,
-          gpu: result[0].ram,
+          ram: result[0].ram,
+          gpu: result[0].gpu,
           weight: result[0].weight,
           warranty: result[0].warranty,
           shops: result.map((index) => {
@@ -94,7 +94,7 @@ router.get("/getshop/:productid/:type", (req, res) => {
               shopid: index.shopid,
               shopcity: index.shopcity,
               shopprice: index.shopprice,
-              shoplink: index.shop,
+              shoplink: index.link,
             };
           }),
         });
