@@ -32,7 +32,7 @@ con.connect(function (err) {
   }
 
 
-router.post("/normal/add",authenticateToken,(req,res)=>{
+router.post("/normal/add",(req,res)=>{
     var report1=req.body.report1;
     var report2=req.body.report2;
     var commodityid=req.body.commodityid;
@@ -47,7 +47,7 @@ router.post("/normal/add",authenticateToken,(req,res)=>{
         })
     })
 })
-router.get("/shop/getlist/:shopid",authenticateToken,(req,res)=>{
+router.get("/shop/getlist/:shopid",(req,res)=>{
         var shopid=req.params.shopid;
         var sql="SELECT commodity_report.id as id,report1,report2,name,img_link,model,type FROM commodity_report JOIN commodity ON commodity.id=commodity_report.commodityid WHERE shopid='"+shopid+"'";
         con.query(sql,function(err,result){
