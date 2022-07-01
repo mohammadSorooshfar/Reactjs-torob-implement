@@ -43,25 +43,37 @@ router.get("/getshop/:productid/:type",(req,res)=>{
     con.query(sql,function(err,result){
         if(err) throw err;
         if(type=="laptop"){
-            res.send({
-                productname:result[0].commodityname,
-                product:result[0].commodityid,
-                ram:result[0].ram,
-                gpu:result[0].gpu,
-                page_dimensions:result[0].Page_dimensions,
-                cpu:result[0].cpu,
-                shops:result.map((index)=>{
-                    return{
-                            shopname:index.shopname,
-                            shopid:index.shopid,
-                            shopcity:index.shopcity,
-                            shopprice:index.shopprice,
-                            shoplink:index.shoplink,
-
-                    }
+            if(result.length==0){
+                res.send({
+                    message:"فروشگاهی پیدا نشد"
                 })
-            })
+            }else{
+                res.send({
+                    productname:result[0].commodityname,
+                    product:result[0].commodityid,
+                    ram:result[0].ram,
+                    gpu:result[0].gpu,
+                    page_dimensions:result[0].Page_dimensions,
+                    cpu:result[0].cpu,
+                    shops:result.map((index)=>{
+                        return{
+                                shopname:index.shopname,
+                                shopid:index.shopid,
+                                shopcity:index.shopcity,
+                                shopprice:index.shopprice,
+                                shoplink:index.shoplink,
+    
+                        }
+                    })
+                })
+            }
+           
         }else{
+            if(result.length==0){
+                res.send({
+                    message:"فروشگاهی پیدا نشد"
+                })
+            }else{
                 res.send({
                     productname:result[0].commodityname,
                     product:result[0].commodityid,
@@ -79,6 +91,8 @@ router.get("/getshop/:productid/:type",(req,res)=>{
                         }
                     })
                 })
+            }
+             
             
           
         }
