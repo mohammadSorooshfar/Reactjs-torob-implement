@@ -41,6 +41,7 @@ router.post("/", function(req, res) {
                 email:result[0].email,
                 role:result[0].type,
                 username:result[0].username,
+                phone:result[0].phone_number,
                 token: token,
                 message: "successful",
               });

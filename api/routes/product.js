@@ -51,7 +51,7 @@ router.get("/getshop/:productid/:type", (req, res) => {
       productid +
       "'";
   }
-
+  console.log(sql);
   con.query(sql, function (err, result) {
     if (err) throw err;
     if (type == "laptop") {
@@ -73,25 +73,23 @@ router.get("/getshop/:productid/:type", (req, res) => {
         }),
       });
     } else {
-      if (result.length == 0) {
-        res.send({});
-      } else {
-        res.send({
-          ram: result[0].color,
-          gpu: result[0].ram,
-          weight: result[0].weight,
-          warranty: result[0].warranty,
-          shops: result.map((index) => {
-            return {
-              shopname: index.shopname,
-              shopid: index.shopid,
-              shopcity: index.shopcity,
-              shopprice: index.shopprice,
-              shoplink: index.shop,
-            };
-          }),
-        });
-      }
+      res.send({
+        productname: result[0].commodityname,
+        product: result[0].commodityid,
+        ram: result[0].color,
+        gpu: result[0].ram,
+        weight: result[0].weight,
+        warranty: result[0].warranty,
+        shops: result.map((index) => {
+          return {
+            shopname: index.shopname,
+            shopid: index.shopid,
+            shopcity: index.shopcity,
+            shopprice: index.shopprice,
+            shoplink: index.shop,
+          };
+        }),
+      });
     }
   });
 });

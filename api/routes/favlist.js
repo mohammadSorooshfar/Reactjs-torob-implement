@@ -66,7 +66,7 @@ router.delete("/delete", authenticateToken, (req, res) => {
     });
   });
 });
-router.get("/get", authenticateToken, (req, res) => {
+router.get("/get", (req, res) => {
   var userid = req.body.userid;
   var sql =
     "SELECT * FROM fav_commodity_list join commodity on fav_commodity_list.commodityid=commodity.id WHERE fav_commodity_list.userid='" +
