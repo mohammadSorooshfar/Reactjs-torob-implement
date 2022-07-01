@@ -10,6 +10,7 @@ import NavbarTorob from "./navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { addSelectedProduct, addSelectedProductDetails } from "./redux/cart";
 import axios from "axios";
+import { type } from "@testing-library/user-event/dist/type";
 export default function Products(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,13 +20,11 @@ export default function Products(props) {
   const productList = useSelector((state) => state.cart.products);
   const setProduct = (product) => {
     dispatch(addSelectedProduct(product));
-    let bodyParameters = {
-      productid: product.id,
-      type: product.type,
-    };
-    console.log(product);
+
     axios
-      .get(`http://localhost:9000/product/getshop`, bodyParameters)
+      .get(
+        `http://localhost:9000/product/getshop/${product.id}/${product.type}`
+      )
       .then((res) => {
         dispatch(addSelectedProductDetails(res.data));
         navigate("/product");
@@ -42,7 +41,7 @@ export default function Products(props) {
     };
     const bodyParameters = {
       commodityid: product.id,
-      userid: user.id,
+      userid: user.userid,
     };
     console.log(user);
     axios
@@ -64,7 +63,7 @@ export default function Products(props) {
     };
     const bodyParameters = {
       commodityid: product.id,
-      userid: user.id,
+      userid: user.userid,
     };
     console.log(user);
     axios
@@ -173,7 +172,7 @@ export default function Products(props) {
                         </span>
                         <img
                           class="card-img-top product-img"
-                          src={product.img}
+                          src={product.img_link}
                           alt="Card cap"
                         />
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">

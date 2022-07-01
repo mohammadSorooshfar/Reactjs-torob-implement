@@ -29,9 +29,9 @@ function authenticateToken(req, res, next) {
   });
 }
 
-router.get("/getshop", (req, res) => {
-  var productid = req.body.productid;
-  var type = req.body.type;
+router.get("/getshop/:productid/:type", (req, res) => {
+  var productid = req.params.productid;
+  var type = req.params.type;
   if (type == "laptop") {
     var sql =
       "SELECT gpu,cpu,ram,Page_dimensions,commodity.name as commodityname,shop_commodity.commodityid,shop.name as shopname ,shop.id as shopid,shop.city as shopcity,shop_commodity.price as shopprice,shop_commodity.link as shoplink  from commodity join shop_commodity on shop_commodity.commodityid=commodity.id join " +
@@ -73,21 +73,25 @@ router.get("/getshop", (req, res) => {
         }),
       });
     } else {
-      res.send({
-        ram: result[0].color,
-        gpu: result[0].ram,
-        weight: result[0].weight,
-        warranty: result[0].warranty,
-        shops: result.map((index) => {
-          return {
-            shopname: index.shopname,
-            shopid: index.shopid,
-            shopcity: index.shopcity,
-            shopprice: index.shopprice,
-            shoplink: index.shop,
-          };
-        }),
-      });
+      if (result.length == 0) {
+        res.send({});
+      } else {
+        res.send({
+          ram: result[0].color,
+          gpu: result[0].ram,
+          weight: result[0].weight,
+          warranty: result[0].warranty,
+          shops: result.map((index) => {
+            return {
+              shopname: index.shopname,
+              shopid: index.shopid,
+              shopcity: index.shopcity,
+              shopprice: index.shopprice,
+              shoplink: index.shop,
+            };
+          }),
+        });
+      }
     }
   });
 });

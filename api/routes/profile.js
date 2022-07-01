@@ -459,6 +459,7 @@ router.post("/shop_owner/add_shop", authenticateToken, (req, res) => {
   var shop_name = req.body.shopname;
   var shop_city = req.body.shop_city;
   var userid = req.body.userid;
+  console.log(req.body);
   var sql = "SELECT * from shop where name='" + shop_name + "'";
   con.query(sql, function (err, result) {
     if (err) throw err;

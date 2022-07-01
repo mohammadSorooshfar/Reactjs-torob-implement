@@ -20,7 +20,10 @@ export default function Profile(props) {
   const [email, setEmail] = useState(user.email);
   const [usernameInput, setUsernameInput] = useState(username);
   const [emailInput, setEmailInput] = useState(email);
-  const [phoneInput, setPhoneInput] = useState("");
+  const [phoneInput, setPhoneInput] = useState(user.phone);
+  const [storeName, setStoreName] = useState("");
+  const [storeCity, setStoreCity] = useState("");
+  const [storeAlreadyAdded, setStoreAlreadyAdded] = useState(false);
   const [productDetails, setProductDetails] = useState({
     name: "",
     price: "",
@@ -32,6 +35,8 @@ export default function Profile(props) {
     brand: "",
     image: "",
   });
+  const [shops, setShops] = useState([]);
+
   const role = user.role;
   const changeProductDetail = (e, property) => {
     const details = productDetails;
@@ -108,7 +113,50 @@ export default function Profile(props) {
 
     console.log(productDetails);
   };
-
+  const onAddStoreSubmit = (e) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const bodyParameters = {
+      shopname: storeName,
+      shop_city: storeCity,
+      userid: user.userid,
+    };
+    console.log(bodyParameters, config);
+    axios
+      .post(
+        `http://localhost:9000/profile/shop_owner/add_shop`,
+        bodyParameters,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+        setStoreAlreadyAdded(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setStoreAlreadyAdded(true);
+      });
+  };
+  const getShops = () => {
+    console.log("here");
+    if (user.role != "normal") {
+      axios
+        .get(
+          `http://localhost:9000/profile/shop_owner/getshop_user/${user.userid}`
+        )
+        .then((res) => {
+          console.log(res.data);
+          setShops(res.data.shops);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
   return (
     <>
       <NavbarTorob />
@@ -372,6 +420,78 @@ export default function Profile(props) {
                     افزودن کالا
                   </Button>
                 </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>فروشگاه ها</Accordion.Header>
+              <Accordion.Body>
+                <Accordion defaultActiveKey={["0"]}>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>افزودن فروشگاه</Accordion.Header>
+                    <Accordion.Body>
+                      {storeAlreadyAdded ? (
+                        <div class="alert alert-danger mb-0 mt-2" role="alert">
+                          فروشگاه با این نام قبلا ثبت شده است!
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <Form className=" p-2" onSubmit={onAddStoreSubmit}>
+                        <div className="row mt-5">
+                          <div className="col">
+                            <Form.Group>
+                              <Form.Label>نام فروشگاه</Form.Label>
+                              <Form.Control
+                                type="text"
+                                defaultValue={storeName}
+                                onChange={(e) => setStoreName(e.target.value)}
+                                required
+                              />
+                            </Form.Group>
+                          </div>
+                          <div className="col">
+                            <Form.Group>
+                              <Form.Label>شهر فروشگاه</Form.Label>
+                              <Form.Control
+                                type="text"
+                                defaultValue={storeCity}
+                                onChange={(e) => setStoreCity(e.target.value)}
+                                required
+                              />
+                            </Form.Group>
+                          </div>
+                        </div>
+                        <Button
+                          className="mt-5"
+                          variant="success"
+                          type="submit"
+                        >
+                          افزودن فروشگاه
+                        </Button>
+                      </Form>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="1" onClick={getShops}>
+                    <Accordion.Header>لیست فروشگاه ها</Accordion.Header>
+                    <Accordion.Body>
+                      {shops.map((shop) => {
+                        return (
+                          <div className="d-flex justify-content-between align-items-center p-4 border mb-3">
+                            <h3 className="m-0 text-dark">{shop.shopname}</h3>
+                            <h4 className="m-0 text-secondary">{shop.city}</h4>
+
+                            <button
+                              className="btn btn-outline-warning ms-2"
+                              onClick={() => {}}
+                            >
+                              گزارش
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

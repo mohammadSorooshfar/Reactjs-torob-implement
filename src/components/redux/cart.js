@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
+  userFavorites: [],
   products: [],
   selectedProduct: {},
   selectedProductDetails: {},
@@ -12,6 +13,9 @@ export const cartSlice = createSlice({
   reducers: {
     saveUser: (state, action) => {
       state.user = action.payload;
+    },
+    saveUserFavorites: (state, action) => {
+      state.userFavorites = action.payload;
     },
     getProducts: (state, action) => {
       state.products = action.payload;
@@ -27,6 +31,7 @@ export const cartSlice = createSlice({
 
 export const {
   saveUser,
+  saveUserFavorites,
   getProducts,
   addSelectedProduct,
   addSelectedProductDetails,

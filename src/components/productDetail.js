@@ -9,13 +9,56 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import NavbarTorob from "./navbar";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 export default function ProductDetail(props) {
   const [show, setShow] = useState(false);
+  const [modalDetails, setModalDetails] = useState({});
+  const [report, setReport] = useState([]);
+  const user = useSelector((state) => state.cart.user);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const product = useSelector((state) => state.cart.selectedProduct);
+  const productDetails = useSelector(
+    (state) => state.cart.selectedProductDetails
+  );
   const navigate = useNavigate();
+  const createReport = () => {
+    if (report.length != 0) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      let bodyParameters;
+      if (report.length == 1) {
+        bodyParameters = {
+          commodityid: productDetails.product,
+          report1: report[0],
+          report2: "",
+          shopid: modalDetails.shopid,
+        };
+      } else {
+        bodyParameters = {
+          commodityid: productDetails.product,
+          report1: report[0],
+          report2: report[1],
+          shopid: modalDetails.shopid,
+        };
+      }
+
+      axios
+        .post(`http://localhost:9000/report/normal/add`, bodyParameters, config)
+        .then((res) => {
+          setReport([]);
+          console.log(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+  console.log(report);
   return (
     <>
       <NavbarTorob />
@@ -23,7 +66,11 @@ export default function ProductDetail(props) {
         <div className="w-75 bg-gray">
           <div className="bg-white product-name-row d-flex align-items-center px-5 py-4">
             <div>
-              <img className="product-detail-image" src={product.img} alt="" />
+              <img
+                className="product-detail-image ms-4"
+                src={product.img_link}
+                alt=""
+              />
             </div>{" "}
             <div>
               <h2>{product.name}</h2>
@@ -33,50 +80,75 @@ export default function ProductDetail(props) {
             </div>
           </div>
           <div className="bg-white d-flex flex-column mt-4 p-4 ">
-            <div className="d-flex justify-content-between align-items-center p-4 border">
-              <div>
-                <p className="m-0">هیماشاپ</p>
-                <p className="m-0 text-secondary">تهران</p>
-              </div>
-              <div>
-                <p className="text-danger">۴۵,۰۰۰,۰۰۰ تومان</p>
-              </div>
-              <div>
-                <button
-                  className="btn btn-outline-warning"
-                  onClick={handleShow}
-                >
-                  گزارش
-                </button>
-                <button className="btn btn-outline-danger">
-                  خرید اینترنتی
-                </button>
-              </div>
-            </div>
+            {productDetails.shops.map((shop) => {
+              return (
+                <div className="d-flex justify-content-between align-items-center p-4 border mb-3">
+                  <div>
+                    <p className="m-0">{shop.shopname}</p>
+                    <p className="m-0 text-secondary">{shop.shopcity}</p>
+                  </div>
+                  <div>
+                    <p className="text-danger m-0">{shop.shopprice} تومان</p>
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-outline-warning ms-2"
+                      onClick={() => {
+                        setModalDetails(shop);
+                        handleShow();
+                      }}
+                    >
+                      گزارش
+                    </button>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        window.open(shop.shoplink, "_blank");
+                      }}
+                    >
+                      خرید اینترنتی
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="w-20 bg-white p-4">
           <h3>مشخصات کلی</h3>
           <hr />
           <div>
-            <p className="m-0">ابعاد</p>
-            <p className="text-secondary">150.9x75.7x8.3 میلیمتر</p>
-          </div>
-          <div>
-            <p className="m-0">وزن</p>
-            <p className="text-secondary">194 گرم</p>
-          </div>
-
-          <div>
-            <p className="m-0">ویژگیهای ظاهری</p>
+            <p className="m-0">
+              {product.type === "laptop" ? "اندازه صفحه" : "گارانتی"}
+            </p>
             <p className="text-secondary">
-              فریم دور آلومینیومی سری 7000, پشت دستگاه گلس, دارای گواهینامه IP68
-              مقاوم در برابر آب و گرد و غبار
+              {product.type === "laptop"
+                ? productDetails.page_dimensions
+                : "وزن"}
             </p>
           </div>
           <div>
-            <p className="m-0">سیم کارت</p>
-            <p className="text-secondary">دو سیم کارت, Nano SIM</p>
+            <p className="m-0">
+              {" "}
+              {product.type === "laptop" ? "پردازنده" : "رنگ"}
+            </p>
+            <p className="text-secondary">
+              {product.type === "laptop" ? productDetails.cpu : "وزن"}
+            </p>
+          </div>
+
+          <div>
+            <p className="m-0">
+              {" "}
+              {product.type === "laptop" ? "کارت گرافیک" : "وزن"}
+            </p>
+            <p className="text-secondary">
+              {product.type === "laptop" ? productDetails.gpu : "وزن"}
+            </p>
+          </div>
+          <div>
+            <p className="m-0">رم</p>
+            <p className="text-secondary">{productDetails.ram}</p>
           </div>
         </div>
       </div>
@@ -86,9 +158,13 @@ export default function ProductDetail(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="d-flex align-items-center p-1 mb-4">
-            <img className="product-detail-image" src={product.img} alt="" />
+            <img
+              className="product-detail-image ms-4"
+              src={product.img}
+              alt=""
+            />
             <div>
-              <h2>هیماشاپ</h2>
+              <h2>{modalDetails.shopname}</h2>
               <h5>{product.name}</h5>
             </div>
           </div>
@@ -100,6 +176,15 @@ export default function ProductDetail(props) {
               type="checkbox"
               class="form-check-input "
               id="roundedExample3"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  let reports = [...report, "قیمت کالا صحیح نیست"];
+                  setReport(reports);
+                } else {
+                  report.splice("قیمت کالا صحیح نیست", 1);
+                  setReport(report);
+                }
+              }}
             />
           </div>
           <div class="form-check checkbox-rounded checkbox-cerulean-blue-filled w-50">
@@ -107,6 +192,15 @@ export default function ProductDetail(props) {
               type="checkbox"
               class="form-check-input "
               id="roundedExample3"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  let reports = [...report, "کالا موجود نیست"];
+                  setReport(reports);
+                } else {
+                  report.splice("کالا موجود نیست", 1);
+                  setReport(report);
+                }
+              }}
             />
             <label class="form-check-label" for="roundedExample3">
               کالا موجود نیست.
@@ -117,7 +211,13 @@ export default function ProductDetail(props) {
           <Button variant="danger" onClick={handleClose}>
             انصراف
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              createReport();
+              handleClose();
+            }}
+          >
             ثبت گزارش
           </Button>
         </Modal.Footer>

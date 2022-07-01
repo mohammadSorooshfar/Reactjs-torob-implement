@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { saveUser } from "./redux/cart";
+import { saveUser, saveUserFavorites } from "./redux/cart";
 
 export default function Login(props) {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [wrong, setWrong] = useState(false);
   const onSubmitForm = (e) => {
     e.preventDefault();
 
@@ -21,10 +22,33 @@ export default function Login(props) {
       .post(`http://localhost:9000/signin/`, { email, password })
       .then((res) => {
         dispatch(saveUser(res.data));
-        navigate("/profile");
+        setWrong(false);
+        if (res.data.role === "normal") {
+          console.log("res");
+          const config = {
+            headers: {
+              Authorization: `Bearer ${res.data.token}`,
+            },
+          };
+          const bodyParameters = {
+            userid: res.data.userid,
+          };
+          console.log(config);
+          axios
+            .get(`http://localhost:9000/favlist/get`, bodyParameters, config)
+            .then((res) => {
+              console.log(res.data);
+              dispatch(saveUserFavorites(res.data));
+              navigate("/profile");
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
       })
       .catch((e) => {
         console.log(e);
+        setWrong(true);
       });
   };
   return (
@@ -43,6 +67,13 @@ export default function Login(props) {
             />
             <h2 className="text-danger ms-3 fs-1">ترب</h2>
           </div>
+          {wrong ? (
+            <div class="alert alert-danger mb-0 mt-2" role="alert">
+              ایمیل یا کلمه عبور اشتباه میباشد
+            </div>
+          ) : (
+            ""
+          )}
           <Form
             className=" py-5 d-flex flex-column justify-content-center align-items-center"
             onSubmit={onSubmitForm}
@@ -57,7 +88,7 @@ export default function Login(props) {
             </Form.Group>
 
             <Form.Group className="mb-5" controlId="formBasicPassword">
-              <Form.Label>رمز عبور</Form.Label>
+              <Form.Label>کلمه عبور</Form.Label>
               <Form.Control
                 type={showPassword ? "text" : "password"}
                 placeholder="کلمه عبور را وارد کنید"
