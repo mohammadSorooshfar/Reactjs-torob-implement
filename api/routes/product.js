@@ -59,7 +59,7 @@ router.get("/getshop/:productid/:type", (req, res) => {
       } else {
         res.send({
           productname: result[0].commodityname,
-          product: result[0].commodityid,
+          productid: result[0].commodityid,
           ram: result[0].ram,
           gpu: result[0].gpu,
           page_dimensions: result[0].Page_dimensions,
