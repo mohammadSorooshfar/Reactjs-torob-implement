@@ -32,5 +32,15 @@ Simple implementation of [torob.com](https://torob.com/)
 ## signin:
 ![img/signin](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/signin.png)
 
+## Seller profile:
+![img/sellerprofile](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/seller_profile.png)
+![img/addingprodouct](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/addingproduct.png)
+![img/addingshop](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/addingshop.png)
+![img/shoplist](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/shoplist.png)
+## add product:
+![img/addproduct](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/addproduct_from_exist_product.png)
+## Buyer profile
+![img/Buyer profile](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/buyer_profile.png)
+
 
 
