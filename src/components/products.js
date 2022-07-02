@@ -4,8 +4,11 @@ import { useNavigate, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import Modal from "react-bootstrap/Modal";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Accordion from "react-bootstrap/Accordion";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import { useLocation } from "react-router-dom";
 import NavbarTorob from "./navbar";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,21 +22,27 @@ import { type } from "@testing-library/user-event/dist/type";
 export default function Products(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const [shops, setShops] = useState({});
+  const [wrong, setWrong] = useState(false);
   const user = useSelector((state) => state.cart.user);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const productList = useSelector((state) => state.cart.products);
   const [products, setProducts] = useState(
     useSelector((state) => state.cart.products)
   );
   const likes = useSelector((state) => state.cart.userFavorites);
-
   const [liked, setLiked] = useState(likes);
-  console.log(likes, liked);
   const sampleLocation = useLocation();
   const [lastLoc, setLastLoc] = useState(sampleLocation);
+  const [details, setDetails] = useState({});
+  const [SelectedStore, setSelectedStore] = useState({});
+  const [price, setPrice] = useState({});
+  const [url, setUrl] = useState({});
 
-  console.log(sampleLocation.pathname.includes("tablet"));
   useEffect(() => {
     if (sampleLocation !== lastLoc) {
       setProducts(productList);
@@ -151,6 +160,74 @@ export default function Products(props) {
         console.log(e);
       });
   }
+  const getShops = () => {
+    console.log("here");
+    axios
+      .get(
+        `http://localhost:9000/profile/shop_owner/getshop_user/${user.userid}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setShops(res.data.shops);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const getDetails = (product) => {
+    axios
+      .get(
+        `http://localhost:9000/product/getshop/${product.id}/${product.type}`
+      )
+      .then((res) => {
+        let det = { ...res.data, ...product };
+        console.log(det);
+        setDetails(det);
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const onAddProduct = () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const bodyParameters = {
+      pname: details.name,
+      pprice: price,
+      plink: url,
+      pimglink: "",
+      ram: "",
+      shopname: SelectedStore,
+      model: "",
+      type: details.type,
+      cpu: "",
+      gpu: "",
+      page_dimensions: "",
+      color: "",
+      weight: "",
+      warranty: "",
+      userid: user.userid,
+    };
+    console.log(bodyParameters);
+    axios
+      .post(
+        `http://localhost:9000/profile/shop_owner/add_product`,
+        bodyParameters,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+        setWrong(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setWrong(true);
+      });
+  };
   return (
     <>
       <NavbarTorob />
@@ -352,7 +429,11 @@ export default function Products(props) {
                           </h5>
                           <p class="card-text">از {product.low_price} تومان</p>
                           <button
-                            onClick={() => setProduct(product)}
+                            onClick={() => {
+                              getShops();
+                              getDetails(product);
+                              handleShow();
+                            }}
                             class="btn btn-outline-success"
                           >
                             افزودن محصول
@@ -388,6 +469,80 @@ export default function Products(props) {
                 );
               })}
         </div>
+
+        {Object.values(shops).length != 0 ? (
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title>اضافه کردن محصول</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {wrong ? (
+                <div class="alert alert-danger mb-0 mt-2" role="alert">
+                  کالا نمیتواند مجدد به فروشگاه اضافه شود{" "}
+                </div>
+              ) : (
+                ""
+              )}
+              <Form className=" p-2">
+                <Form.Group>
+                  <Form.Label>قیمت</Form.Label>
+                  <Form.Control
+                    type="number"
+                    onChange={(e) => setPrice(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>لینک صفحه</Form.Label>
+                  <Form.Control
+                    type="url"
+                    onChange={(e) => setUrl(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <select
+                    class="form-select mt-4"
+                    onChange={(e) => setSelectedStore(e.target.value)}
+                  >
+                    <option value="" selected>
+                      انتخاب فروشگاه
+                    </option>
+                    {shops.map((shop) => {
+                      return (
+                        <option value={shop.shopname}>{shop.shopname}</option>
+                      );
+                    })}
+                  </select>
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-start">
+              <Button
+                variant="danger"
+                onClick={() => {
+                  setWrong(false);
+                  handleClose();
+                }}
+              >
+                انصراف
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  onAddProduct();
+                  if (!wrong) {
+                    handleClose();
+                  }
+                }}
+              >
+                افزودن محصول
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        ) : (
+          ""
+        )}
       </main>
     </>
   );

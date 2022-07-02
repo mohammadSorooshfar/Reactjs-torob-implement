@@ -184,8 +184,16 @@ export default function Home(props) {
           </Nav>
           {user.username ? (
             <DropdownButton id="dropdown-basic-button" title={user.username}>
-              <Dropdown.Item href="/profile">Profile</Dropdown.Item>
-              <Dropdown.Item onClick={() => logOut()}>Log out</Dropdown.Item>
+              <Dropdown.Item>
+                <Link to="/profile" className="link-profile ">
+                  Profile
+                </Link>{" "}
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => logOut()}>
+                <Link to="/login" className="link-profile ">
+                  logout
+                </Link>{" "}
+              </Dropdown.Item>
             </DropdownButton>
           ) : (
             <button

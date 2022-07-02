@@ -93,3 +93,7 @@ main {
 .card {
   height: 400px;
 }
+.link-profile {
+  text-decoration: none;
+  color: black;
+}
