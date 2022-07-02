@@ -168,12 +168,12 @@ router.post("/shop_owner/add_product",authenticateToken,function(req, res){
                       console.log(sql3);
                       con.query(sql3,function(err,result){
                         if(err) throw err;
-                        var sql4="SELECT MAX(price),MIN(price) FROM shop_commodity WHERE commodityid='"+commodityid+"'";
+                        var sql4="SELECT MAX(price) as max,MIN(price) as min FROM shop_commodity WHERE commodityid='"+commodityid+"'";
                         con.query(sql4,function(err,result){
                           if(err) throw err;
                           console.log(result);
-                          var max=result.max;
-                          var min=result.min;
+                          var max=result[0].max;
+                          var min=result[0].min;
                           var sql5="UPDATE commodity SET low_price='"+min+"', high_price='"+max+"' WHERE id='"+commodityid+"'";
                           con.query(sql5,function(err,result){
                             if(err) throw err;
@@ -235,12 +235,12 @@ router.post("/shop_owner/add_product",authenticateToken,function(req, res){
                      
                       con.query(sql3,function(err,result){
                         if(err) throw err;
-                        var sql4="SELECT MAX(price),MIN(price) FROM shop_commodity WHERE commodityid='"+commodityid+"'";
+                        var sql4="SELECT MAX(price) as max,MIN(price) as min FROM shop_commodity WHERE commodityid='"+commodityid+"'";
                         con.query(sql4,function(err,result){
                           if(err) throw err;
                           
-                          var max=result.max;
-                          var min=result.min;
+                          var max=result[0].max;
+                          var min=result[0].min;
                           var sql5="UPDATE commodity SET low_price='"+min+"', high_price='"+max+"' WHERE id='"+commodityid+"'";
                           con.query(sql5,function(err,result){
                             if(err) throw err;
