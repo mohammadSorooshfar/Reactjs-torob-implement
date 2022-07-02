@@ -18,4 +18,14 @@ home page:
 search in home page and result:
 ![img/search](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/searchinhome.png)
 ![img/aftersearch](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/aftersearch.png)
+Product page:
+![img/productpage](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/productpage.png)
+report Product:
+![img/reportproduct](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/productreport.png)
+signup:
+![img/signup](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/signup.png)
+signin
+![img/signin](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/signin.png)
+
+
 
