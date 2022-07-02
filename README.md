@@ -14,4 +14,4 @@ Simple implementation of [torob.com](https://torob.com/)
 
 
 
-<img src="[img/home.png](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/home.png)" width="128"/>
+"[img/home.png](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/home.png)"
