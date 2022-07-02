@@ -12,6 +12,7 @@ export default function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [number, setNumber] = useState("");
   const [role, setRole] = useState("normal");
   const [wrong, setWrong] = useState(false);
   const onSubmitForm = (e) => {
@@ -20,6 +21,7 @@ export default function Signup(props) {
       email,
       password,
       username,
+      phone_number: number,
       role,
     };
     console.log(user);
@@ -87,7 +89,7 @@ export default function Signup(props) {
                 <Form.Control
                   type="phone"
                   placeholder="شماره را وارد کنید"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setNumber(e.target.value)}
                   disabled
                 />
               </Form.Group>
@@ -97,7 +99,7 @@ export default function Signup(props) {
                 <Form.Control
                   type="phone"
                   placeholder="شماره را وارد کنید"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setNumber(e.target.value)}
                 />
               </Form.Group>
             )}

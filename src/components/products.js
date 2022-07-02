@@ -81,6 +81,7 @@ export default function Products(props) {
       .post(`http://localhost:9000/favlist/add`, bodyParameters, config)
       .then((res) => {
         console.log(res.data);
+        setLiked([...liked, res.data]);
       })
       .catch((e) => {
         console.log(e);
@@ -120,7 +121,7 @@ export default function Products(props) {
       ProductsLists.sort(function (a, b) {
         return b.low_price - a.low_price;
       });
-    } else if (searchParameter == "luxury") {
+    } else if (searchParameter == "new") {
       ProductsLists.sort(function (a, b) {
         return b.time - a.time;
       });
@@ -132,17 +133,16 @@ export default function Products(props) {
     console.log(from, to);
     const filters = (product) => {
       if (!to) {
-        setTo(1000000000);
+        return (
+          product.low_price <= Number(1000000000000) &&
+          product.low_price >= Number(from)
+        );
       }
       if (!from) {
-        setFrom(0);
+        return (
+          product.low_price <= Number(to) && product.low_price >= Number(0)
+        );
       }
-      console.log(
-        product.low_price <= Number(to) && product.low_price >= Number(from)
-      );
-      return (
-        product.low_price <= Number(to) && product.low_price >= Number(from)
-      );
     };
     ProductsLists = ProductsLists.filter(filters);
     setProducts(ProductsLists);
@@ -231,7 +231,7 @@ export default function Products(props) {
   return (
     <>
       <NavbarTorob />
-      <aside>
+      <aside className="d-none d-lg-block">
         <Accordion defaultActiveKey={["0", "1"]} alwaysOpen>
           <Accordion.Item eventKey="0">
             <Accordion.Header>زیر دسته ها</Accordion.Header>
@@ -365,88 +365,66 @@ export default function Products(props) {
               <option value="new">جدید ترین</option>
             </select>
           </div>
+          <div className="col-3 d-block d-lg-none">
+            <select
+              class="form-select"
+              onChange={(e) => {
+                sortFunc(e);
+              }}
+            >
+              <option value="none" selected>
+                زیردسته ها
+              </option>
+              <option value="cheap">ارزان ترین</option>
+              <option value="luxury">گران ترین</option>
+              <option value="new">جدید ترین</option>
+            </select>
+          </div>
+          <div className="col-3 d-block d-lg-none">
+            <select
+              class="form-select"
+              onChange={(e) => {
+                sortFunc(e);
+              }}
+            >
+              <option value="none" selected>
+                بازه قیمت
+              </option>
+              <option value="cheap">ارزان ترین</option>
+              <option value="luxury">گران ترین</option>
+              <option value="new">جدید ترین</option>
+            </select>
+          </div>
         </div>
 
-        <div className="row mb-3">
-          {Object.keys(user).length !== 0
-            ? user.role === "normal"
-              ? products.map((product) => {
-                  return (
-                    <div className="col-lg-3 col-6">
-                      <div class="card p-1">
-                        <span
-                          class="wish-icon me-2"
-                          onClick={() => {
-                            console.log(product);
-                            liked.find((productInner) => {
-                              return productInner.productid == product.id;
-                            })
-                              ? removeFromFav(product)
-                              : addToFav(product);
-                          }}
-                        >
-                          {liked.find((productInner) => {
-                            return productInner.productid == product.id;
-                          }) ? (
-                            <i class="fa fa-heart"></i>
-                          ) : (
-                            <i class="fa fa-heart-o"></i>
-                          )}
-                        </span>
-                        <img
-                          class="card-img-top product-img"
-                          src={product.img_link}
-                          alt="Card cap"
-                        />
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                          <h5 class="card-title text-secondary product-name">
-                            {product.name}
-                          </h5>
-                          <p class="card-text">از {product.low_price} تومان</p>
-                          <button
-                            onClick={() => setProduct(product)}
-                            class="btn btn-outline-success"
-                          >
-                            مشاهده فروشندگان
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-              : products.map((product) => {
-                  return (
-                    <div className="col-lg-3 col-6">
-                      <div class="card p-1">
-                        <img
-                          class="card-img-top product-img"
-                          src={product.img_link}
-                          alt="Card cap"
-                        />
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                          <h5 class="card-title text-secondary product-name">
-                            {product.name}
-                          </h5>
-                          <p class="card-text">از {product.low_price} تومان</p>
-                          <button
-                            onClick={() => {
-                              getShops();
-                              getDetails(product);
-                              handleShow();
-                            }}
-                            class="btn btn-outline-success"
-                          >
-                            افزودن محصول
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-            : products.map((product) => {
+        <div className="row mb-3 ">
+          {!products ? (
+            <h2 className="text-center"> کالای مورد نظر یافت نشد!</h2>
+          ) : Object.keys(user).length !== 0 ? (
+            user.role === "normal" ? (
+              products.map((product) => {
                 return (
-                  <div className="col-lg-3 col-6">
-                    <div class="card p-1">
+                  <div className=" col-6 col-sm-4 col-lg-3 mt-2">
+                    <div class="card p-2">
+                      <span
+                        class="wish-icon me-2"
+                        onClick={() => {
+                          console.log(product);
+                          liked.find((productInner) => {
+                            return productInner.productid == product.id;
+                          })
+                            ? removeFromFav(product)
+                            : addToFav(product);
+                        }}
+                      >
+                        {liked.find((productInner) => {
+                          return productInner.productid == product.id;
+                        }) ? (
+                          <i class="fa fa-heart"></i>
+                        ) : (
+                          <i class="fa fa-heart-o"></i>
+                        )}
+                      </span>
                       <img
                         class="card-img-top product-img"
                         src={product.img_link}
@@ -467,7 +445,65 @@ export default function Products(props) {
                     </div>
                   </div>
                 );
-              })}
+              })
+            ) : (
+              products.map((product) => {
+                return (
+                  <div className=" col-6 col-sm-4 col-lg-3 mt-2">
+                    <div class="card p-2">
+                      <img
+                        class="card-img-top product-img"
+                        src={product.img_link}
+                        alt="Card cap"
+                      />
+                      <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <h5 class="card-title text-secondary product-name">
+                          {product.name}
+                        </h5>
+                        <p class="card-text">از {product.low_price} تومان</p>
+                        <button
+                          onClick={() => {
+                            getShops();
+                            getDetails(product);
+                            handleShow();
+                          }}
+                          class="btn btn-outline-success"
+                        >
+                          افزودن محصول
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )
+          ) : (
+            products.map((product) => {
+              return (
+                <div className=" col-6 col-sm-4 col-lg-3 mt-2">
+                  <div class="card p-2">
+                    <img
+                      class="card-img-top product-img"
+                      src={product.img_link}
+                      alt="Card cap"
+                    />
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                      <h5 class="card-title text-secondary product-name">
+                        {product.name}
+                      </h5>
+                      <p class="card-text">از {product.low_price} تومان</p>
+                      <button
+                        onClick={() => setProduct(product)}
+                        class="btn btn-outline-success"
+                      >
+                        مشاهده فروشندگان
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
 
         {Object.values(shops).length != 0 ? (

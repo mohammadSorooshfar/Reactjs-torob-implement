@@ -62,9 +62,9 @@ export default function ProductDetail(props) {
   return (
     <>
       <NavbarTorob />
-      <div className="product-detail-main d-flex justify-content-between">
-        <div className="w-75 bg-gray">
-          <div className="bg-white product-name-row d-flex align-items-center px-5 py-4">
+      <div className="product-detail-main d-lg-flex  justify-content-between">
+        <div className=" product-details-right bg-gray">
+          <div className="bg-white product-name-row d-sm-flex align-items-center px-5 py-4">
             <div>
               <img
                 className="product-detail-image ms-4"
@@ -83,7 +83,7 @@ export default function ProductDetail(props) {
             {productDetails.shops
               ? productDetails.shops.map((shop) => {
                   return (
-                    <div className="d-flex justify-content-between align-items-center p-4 border mb-3">
+                    <div className="shop d-sm-flex justify-content-between align-items-center p-4 border mb-3">
                       <div>
                         <p className="m-0">{shop.shopname}</p>
                         <p className="m-0 text-secondary">{shop.shopcity}</p>
@@ -119,7 +119,7 @@ export default function ProductDetail(props) {
               : ""}
           </div>
         </div>
-        <div className="w-20 bg-white p-4">
+        <div className=" product-details-left bg-white p-4 d-flex justify-content-between d-lg-block mt-4 mt-lg-0">
           <h3>مشخصات کلی</h3>
           <hr />
           <div>

@@ -214,9 +214,9 @@ export default function Profile(props) {
       <NavbarTorob />
       <Container className="mt-5">
         <div className=" mb-3">
-          <div className="border d-flex align-items-center justify-content-between p-4">
+          <div className="border text-center d-md-flex align-items-center justify-content-between p-4">
             <h3 className="mb-0 ">{username} خوش آمدید</h3>
-            <p className="mb-0 me-5">{email}</p>
+            <p className="mb-0 me-md-5">{email}</p>
           </div>
         </div>
         {role === "normal" ? (
@@ -231,7 +231,7 @@ export default function Profile(props) {
                 <div className="row">
                   {favorites.map((product) => {
                     return (
-                      <div className="col-lg-3 col-6">
+                      <div className="col-lg-3 col-md-4  col-6">
                         <div class="card p-1">
                           <span
                             class="wish-icon me-2"
@@ -268,7 +268,7 @@ export default function Profile(props) {
               <Accordion.Header>حساب کاربر</Accordion.Header>
               <Accordion.Body>
                 <Form
-                  className=" py-5 px-4 d-flex  justify-content-between align-items-end"
+                  className="edit-form py-5 px-4 d-flex  justify-content-between "
                   onSubmit={onEditFormSubmit}
                 >
                   <Form.Group className="" controlId="formBasicPassword">
@@ -296,7 +296,11 @@ export default function Profile(props) {
                       onChange={(e) => setPhoneInput(e.target.value)}
                     />{" "}
                   </Form.Group>
-                  <Button variant="warning" type="submit">
+                  <Button
+                    variant="warning"
+                    type="submit"
+                    className="mt-4 mt-lg-0"
+                  >
                     ویرایش اطلاعات
                   </Button>
                 </Form>
@@ -307,7 +311,7 @@ export default function Profile(props) {
               <Accordion.Body>
                 <Form className=" py-5 px-4" onSubmit={onAddFormSubmit}>
                   <div className="row ">
-                    <div className="col-4">
+                    <div className="col-12 col-lg-4">
                       <select
                         class="form-select"
                         onChange={(e) => setCategory(e.target.value)}
@@ -321,7 +325,7 @@ export default function Profile(props) {
                     </div>
                   </div>
                   <div className="row mt-5">
-                    <div className="col">
+                    <div className="col-6">
                       <Form.Group controlId="formBasicPassword">
                         <Form.Label>برند</Form.Label>
                         <Form.Control
@@ -330,7 +334,7 @@ export default function Profile(props) {
                         />
                       </Form.Group>
                     </div>
-                    <div className="col">
+                    <div className="col-6">
                       <Form.Group controlId="formBasicEmail">
                         <Form.Label>لینک عکس</Form.Label>
                         <Form.Control
@@ -341,7 +345,7 @@ export default function Profile(props) {
                     </div>
                   </div>
                   <div className="row mt-5">
-                    <div className="col">
+                    <div className="col-6 col-md-4">
                       <Form.Group controlId="formBasicPassword">
                         <Form.Label>نام محصول</Form.Label>
                         <Form.Control
@@ -350,7 +354,7 @@ export default function Profile(props) {
                         />
                       </Form.Group>
                     </div>
-                    <div className="col">
+                    <div className="col-6 col-md-4">
                       <Form.Group controlId="formBasicEmail">
                         <Form.Label>قیمت</Form.Label>
                         <Form.Control
@@ -359,7 +363,7 @@ export default function Profile(props) {
                         />
                       </Form.Group>
                     </div>
-                    <div className="col">
+                    <div className="col-6 col-md-4 mt-3 mt-md-0">
                       <Form.Group controlId="formBasicPassword">
                         <Form.Label> لینک صفحه محصول</Form.Label>
                         <Form.Control
@@ -370,7 +374,7 @@ export default function Profile(props) {
                     </div>
                   </div>
                   <div className="row mt-5">
-                    <div className="col">
+                    <div className="col-6 col-md-3">
                       <Form.Group controlId="formBasicPassword">
                         <Form.Label>
                           {category === "laptop" ? "اندازه صفحه" : "گارانتی"}
@@ -383,7 +387,7 @@ export default function Profile(props) {
                         />
                       </Form.Group>
                     </div>
-                    <div className="col">
+                    <div className="col-6 col-md-3">
                       <Form.Group controlId="formBasicEmail">
                         <Form.Label>
                           {category === "laptop" ? "پردازنده" : "رنگ"}
@@ -394,7 +398,7 @@ export default function Profile(props) {
                         />
                       </Form.Group>
                     </div>
-                    <div className="col">
+                    <div className="col-6 col-md-3  mt-3 mt-md-0">
                       <Form.Group controlId="formBasicPassword">
                         <Form.Label>
                           {category === "laptop" ? "کارت گرافیک" : "وزن"}
@@ -407,7 +411,7 @@ export default function Profile(props) {
                         />{" "}
                       </Form.Group>
                     </div>
-                    <div className="col">
+                    <div className="col-6 col-md-3 mt-3 mt-md-0">
                       <Form.Group controlId="formBasicPassword">
                         <Form.Label>رم</Form.Label>
                         <Form.Control
@@ -418,7 +422,7 @@ export default function Profile(props) {
                     </div>
                   </div>
                   <div className="row mt-5">
-                    <div className="col-4">
+                    <div className="col-12 col-md-4">
                       <select
                         class="form-select"
                         onMouseEnter={getShops}

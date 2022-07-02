@@ -1,6 +1,6 @@
 * {
   direction: rtl;
-  text-align: right;
+  /* text-align: right; */
   font-family: iranyekan;
 }
 .btn-search {
@@ -38,6 +38,7 @@ aside {
   width: 40% !important;
 }
 main {
+  min-height: 100vh;
   margin-right: 30%;
   width: 70%;
   padding: 1%;
@@ -63,6 +64,7 @@ main {
 }
 .product-detail-main {
   width: 100%;
+  min-height: 100vh;
   background-color: #f2f3f5;
   padding: 3% 8%;
 }
@@ -96,4 +98,61 @@ main {
 .link-profile {
   text-decoration: none;
   color: black;
+}
+.torob-logo-home-page {
+  width: 200px;
+  height: 200px;
+}
+.search-navbar {
+  width: 50% !important;
+}
+.edit-form {
+  align-items: end;
+}
+.product-details-right {
+  width: 75%;
+}
+.product-details-left {
+  width: 20%;
+}
+@media (max-width: 480px) {
+  .torob-logo-home-page {
+    width: 100px;
+    height: 100px;
+  }
+  .torob-title-home-page {
+    flex-direction: column;
+    text-align: center;
+  }
+  .search-login-navbar {
+    flex-direction: column;
+  }
+}
+@media (max-width: 767px) {
+  .search-navbar {
+    width: 100% !important;
+  }
+  .product-name-row {
+    text-align: center;
+  }
+  .shop {
+    text-align: center;
+  }
+}
+@media (max-width: 992px) {
+  .edit-form {
+    flex-direction: column;
+    align-items: center !important;
+  }
+  main {
+    margin-right: 0;
+    padding: 2%;
+    width: 100%;
+  }
+  .product-details-right {
+    width: 100%;
+  }
+  .product-details-left {
+    width: 100%;
+  }
 }

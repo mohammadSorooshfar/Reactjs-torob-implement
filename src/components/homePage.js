@@ -51,137 +51,140 @@ export default function Home(props) {
     <>
       <Navbar bg="light" expand="lg">
         <Container className=" align-items-center justify-content-between ">
-          <Nav className="mt-3">
-            <NavDropdown title="موبایل" className="me-5">
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/mobile");
-                  }}
-                >
-                  گوشی موبایل{" "}
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/mobile/samsung");
-                  }}
-                >
-                  گوشی سامسونگ{" "}
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/mobile/xiaomi");
-                  }}
-                >
-                  گوشی شیائومی
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/mobile/apple");
-                  }}
-                >
-                  گوشی اپل
-                </button>
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="تبلت" className="me-5">
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/tablet");
-                  }}
-                >
-                  تبلت
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/tablet/samsung");
-                  }}
-                >
-                  تبلت سامسونگ
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/tablet/xiaomi");
-                  }}
-                >
-                  تبلت شیائومی
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/tablet/apple");
-                  }}
-                >
-                  تبلت اپل
-                </button>
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="لپ تاپ" className="me-5">
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/laptop");
-                  }}
-                >
-                  لپ تاپ و نوت بوک{" "}
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/laptop/lenovo");
-                  }}
-                >
-                  لپ تاپ لنوو
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/laptop/asus");
-                  }}
-                >
-                  لپ تاپ ایسوس
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button
-                  className="nav-link nav-button"
-                  onClick={() => {
-                    checkCategory("/laptop/apple");
-                  }}
-                >
-                  لپ تاپ اپل
-                </button>
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mt-3">
+              <NavDropdown title="موبایل" className="me-5">
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/mobile");
+                    }}
+                  >
+                    گوشی موبایل{" "}
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/mobile/samsung");
+                    }}
+                  >
+                    گوشی سامسونگ{" "}
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/mobile/xiaomi");
+                    }}
+                  >
+                    گوشی شیائومی
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/mobile/apple");
+                    }}
+                  >
+                    گوشی اپل
+                  </button>
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="تبلت" className="me-5">
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/tablet");
+                    }}
+                  >
+                    تبلت
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/tablet/samsung");
+                    }}
+                  >
+                    تبلت سامسونگ
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/tablet/xiaomi");
+                    }}
+                  >
+                    تبلت شیائومی
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/tablet/apple");
+                    }}
+                  >
+                    تبلت اپل
+                  </button>
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="لپ تاپ" className="me-5">
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/laptop");
+                    }}
+                  >
+                    لپ تاپ و نوت بوک{" "}
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/laptop/lenovo");
+                    }}
+                  >
+                    لپ تاپ لنوو
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/laptop/asus");
+                    }}
+                  >
+                    لپ تاپ ایسوس
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button
+                    className="nav-link nav-button"
+                    onClick={() => {
+                      checkCategory("/laptop/apple");
+                    }}
+                  >
+                    لپ تاپ اپل
+                  </button>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
           {user.username ? (
             <DropdownButton id="dropdown-basic-button" title={user.username}>
               <Dropdown.Item>
@@ -207,23 +210,23 @@ export default function Home(props) {
       </Navbar>
       <Container className="py-5">
         <div className="d-flex justify-content-center flex-column align-items-center mt-5">
-          <div className="d-flex justify-content-center align-items-center ">
+          <div className="d-flex justify-content-center align-items-center torob-title-home-page">
             <img
               src="https://torob.com/static/images/torob_logo.svg"
               alt="torob-logo"
-              style={{ width: "200px", height: "200px" }}
+              className="torob-logo-home-page"
             />
-            <div className="me-5">
+            <div className="me-md-5 torob-text-home-page">
               <h1
-                className="text-danger display-1"
+                className="text-danger display-1 mt-4 mt-md-0"
                 onClick={() => navigate("/")}
               >
                 ترب
               </h1>
-              <h3>موتور جستجوی هوشمند خرید</h3>
+              <h3 className=" mt-4 mt-md-0">موتور جستجوی هوشمند خرید</h3>
             </div>
           </div>
-          <div className="input-group w-50 mt-5">
+          <div className="input-group w-75  mt-5">
             <div className="input-group-append">
               <button
                 className="btn btn-secondary"
