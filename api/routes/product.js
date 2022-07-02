@@ -58,6 +58,7 @@ router.get("/getshop/:productid/:type", (req, res) => {
         });
       } else {
         res.send({
+          type:type,
           productname: result[0].commodityname,
           productid: result[0].commodityid,
           ram: result[0].ram,
@@ -82,6 +83,7 @@ router.get("/getshop/:productid/:type", (req, res) => {
         });
       } else {
         res.send({
+          type:type,
           productname: result[0].commodityname,
           productid: result[0].commodityid,
           ram: result[0].ram,
