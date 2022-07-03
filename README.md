@@ -43,4 +43,11 @@ Simple implementation of [torob.com](https://torob.com/)
 ![img/Buyer profile](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/buyer_profile.png)
 
 
+## responsive design
+![img/hr](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/homeresponsive.png)
+![img/signupres](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/signup_responsiv.png)
+![img/profileres](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/proofile_responsive.png)
+![img/profileres2](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/profile_responsive.png)
+![img/productres](https://github.com/mohammadSorooshfar/IE-final-project/blob/develop/img/productpage_resp.png)
+
 
